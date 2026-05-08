@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Folder, File, Upload, Plus, Search, 
-  MoreVertical, Download, Trash2, ArrowLeft,
+  Folder, File, Upload, Plus, Search, Download, Trash2, ArrowLeft,
   HardDrive, Edit2, X
 } from 'lucide-react';
 import api from '../utils/api';
