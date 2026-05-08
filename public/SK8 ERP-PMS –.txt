@@ -1,0 +1,719 @@
+# SK8 ERP/PMS – Full Real-Time Workflow Scenario
+
+## (Complete End-to-End Flow Explanation)
+
+Scenario:
+SK8 Engineering ku oru new project vandhuruku.
+
+Project:
+
+```text id="ph32q2"
+Factory Conveyor System Installation
+```
+
+Client:
+ABC Manufacturing Singapore
+
+Ipo indha project system la eppadi full ah flow agum nu real-time scenario vechu pakalam.
+
+---
+
+# STEP 1 — Admin Setup
+
+System start panna first:
+
+Admin login pannuvanga.
+
+Settings module la:
+
+```text id="8w3q4u"
+Users
+Roles
+Departments
+Warehouses
+Units
+Categories
+Suppliers
+Cost Centers
+```
+
+ellam create pannuvanga.
+
+---
+
+## Example
+
+### Departments
+
+```text id="ul8qj9"
+Engineering
+Procurement
+Logistics
+Warehouse
+Accounts
+```
+
+---
+
+### Users
+
+```text id="n4a7m7"
+Project Manager
+Store Incharge
+Procurement Executive
+Site Engineer
+Logistics Coordinator
+```
+
+---
+
+### Warehouses
+
+```text id="u0m9ch"
+Main Warehouse
+Site Warehouse
+```
+
+---
+
+### Suppliers
+
+```text id="4ylwbj"
+Motor Supplier
+Sensor Supplier
+Steel Supplier
+```
+
+---
+
+# STEP 2 — Project Creation
+
+Project Manager login pannuvaaru.
+
+Go to:
+
+```text id="29j77w"
+Project Management → Projects
+```
+
+Create new project.
+
+---
+
+## Project Details
+
+```text id="4v7tmt"
+Project Name:
+Factory Conveyor Installation
+
+Client:
+ABC Manufacturing
+
+Budget:
+SGD 250,000
+
+Start Date:
+01 June 2026
+
+End Date:
+30 August 2026
+```
+
+Save pannuvanga.
+
+---
+
+# STEP 3 — Project Planning
+
+Next:
+
+```text id="y2k03r"
+Project Planning
+```
+
+la high-level stages create pannuvanga.
+
+---
+
+## Example Stages
+
+```text id="1ll2w6"
+1. Design
+2. Procurement
+3. Fabrication
+4. Installation
+5. Testing
+```
+
+---
+
+# STEP 4 — WBS / Tasks Creation
+
+Ipo project ah small tasks ah split pannuvanga.
+
+Go to:
+
+```text id="5rkqsr"
+WBS / Tasks
+```
+
+---
+
+## Example Tasks
+
+```text id="tz3jpv"
+Design
+ ├── CAD Drawing
+ ├── Client Approval
+
+Procurement
+ ├── Motor Purchase
+ ├── Sensor Purchase
+
+Installation
+ ├── Site Preparation
+ ├── Conveyor Assembly
+ ├── Electrical Wiring
+```
+
+---
+
+# STEP 5 — Scheduling
+
+Ipo task ku dates assign pannuvanga.
+
+---
+
+## Example
+
+```text id="5wqk30"
+CAD Drawing
+01 Jun → 05 Jun
+
+Client Approval
+06 Jun → 08 Jun
+
+Motor Purchase
+09 Jun → 15 Jun
+```
+
+---
+
+# Dependency Logic
+
+```text id="kcb8af"
+Motor Purchase start aagakoodadhu
+until CAD approval completed.
+```
+
+System dependency maintain pannum.
+
+---
+
+# STEP 6 — Team Allocation
+
+Project Manager users assign pannuvaaru.
+
+---
+
+## Example
+
+```text id="12g3s0"
+CAD Drawing → Design Engineer
+
+Motor Purchase → Procurement Executive
+
+Installation → Site Engineer
+```
+
+---
+
+# STEP 7 — BOM Creation
+
+Engineering team drawing based on BOM create pannuvanga.
+
+Go to:
+
+```text id="wsy1x4"
+BOM Management → BOM Master
+```
+
+---
+
+## Example BOM
+
+```text id="e6q7sk"
+Motor → 10 Nos
+Sensors → 20 Nos
+Steel Frame → 500 Kg
+Belts → 50 Meters
+```
+
+---
+
+# STEP 8 — Inventory Availability Check
+
+System auto inventory check pannum.
+
+---
+
+## Example
+
+| Item    | Required | Available | Shortage |
+| ------- | -------- | --------- | -------- |
+| Motor   | 10       | 4         | 6        |
+| Sensors | 20       | 20        | 0        |
+| Steel   | 500      | 300       | 200      |
+
+---
+
+# STEP 9 — Material Reservation
+
+Available stock reserve pannum.
+
+---
+
+## Example
+
+```text id="6odbr7"
+4 Motors reserved
+20 Sensors reserved
+300 Kg steel reserved
+```
+
+---
+
+# STEP 10 — Auto Shortage Calculation
+
+Remaining shortage auto identify pannum.
+
+---
+
+## Example
+
+```text id="rr5n5r"
+Need to procure:
+6 Motors
+200 Kg Steel
+```
+
+---
+
+# STEP 11 — Purchase Request (PR)
+
+System auto PR create pannum.
+
+Go to:
+
+```text id="f7l3mi"
+Procurement → Purchase Requests
+```
+
+---
+
+## Example PR
+
+```text id="vg5hrw"
+PR-0001
+
+6 Motors
+200 Kg Steel
+```
+
+---
+
+# STEP 12 — Approval Workflow
+
+Manager approval ku pogum.
+
+---
+
+## Approval Flow
+
+```text id="rw8o6s"
+Procurement Executive
+      ↓
+Department Manager
+      ↓
+Finance
+      ↓
+Final Approval
+```
+
+---
+
+# STEP 13 — RFQ Creation
+
+Approved PR ku RFQ send pannuvanga.
+
+---
+
+## Example
+
+```text id="3d1nfr"
+Motor Supplier
+Steel Supplier
+```
+
+quotation request receive pannuvanga.
+
+---
+
+# STEP 14 — Supplier Quotations
+
+Suppliers quotations upload pannuvanga.
+
+---
+
+## Example
+
+| Supplier   | Amount     | Delivery |
+| ---------- | ---------- | -------- |
+| Supplier A | SGD 12,000 | 5 Days   |
+| Supplier B | SGD 11,500 | 10 Days  |
+
+---
+
+# STEP 15 — Purchase Order (PO)
+
+Best supplier select pannitu PO create pannuvanga.
+
+---
+
+## Example
+
+```text id="nx26ic"
+PO-00012
+Supplier A
+6 Motors
+```
+
+---
+
+# STEP 16 — Goods Receiving (GRN)
+
+Materials warehouse ku vandhurum.
+
+Store team:
+
+```text id="4rwcb2"
+Warehouse → GRN
+```
+
+la receive pannuvanga.
+
+---
+
+## Example
+
+```text id="gxq4y5"
+Received:
+6 Motors
+200 Kg Steel
+```
+
+---
+
+# STEP 17 — Quality Check (QC)
+
+Optional inspection.
+
+---
+
+## Example
+
+```text id="m2z6ax"
+Motor Condition:
+PASS
+```
+
+---
+
+# STEP 18 — Stock Update
+
+Inventory auto update agum.
+
+---
+
+## Example
+
+| Item  | Before | After |
+| ----- | ------ | ----- |
+| Motor | 4      | 10    |
+| Steel | 300    | 500   |
+
+---
+
+# STEP 19 — Logistics / Dispatch
+
+Installation start panna materials site ku dispatch pannuvanga.
+
+Go to:
+
+```text id="qru01r"
+Logistics → Dispatch
+```
+
+---
+
+## Example
+
+```text id="nwmnqj"
+Dispatch:
+10 Motors
+500 Kg Steel
+```
+
+Vehicle assign pannuvanga.
+
+---
+
+# STEP 20 — Delivery Tracking
+
+Logistics team tracking maintain pannuvanga.
+
+---
+
+## Example
+
+```text id="w6nngd"
+Vehicle:
+SGX-4587
+
+Status:
+In Transit
+```
+
+---
+
+# STEP 21 — Delivery Acknowledgement
+
+Site engineer receive pannuvaaru.
+
+---
+
+## Example
+
+```text id="0s3yz7"
+Received Successfully
+No Damage
+```
+
+upload signature/photo.
+
+---
+
+# STEP 22 — Project Execution
+
+Site team work start pannuvanga.
+
+---
+
+## Example
+
+```text id="0mdh16"
+Conveyor Assembly → 40%
+Wiring → 20%
+```
+
+daily progress update pannuvanga.
+
+---
+
+# STEP 23 — Progress Tracking
+
+PM dashboard la monitor pannuvaaru.
+
+---
+
+## Example
+
+```text id="r05ysc"
+Project Completion:
+65%
+```
+
+---
+
+# STEP 24 — Delay Monitoring
+
+Task late na alert varum.
+
+---
+
+## Example
+
+```text id="ywjqpn"
+Electrical Wiring delayed by 3 days
+```
+
+---
+
+# STEP 25 — Document Management
+
+All files upload pannuvanga.
+
+---
+
+## Example
+
+```text id="txbpx5"
+CAD Drawings
+PO Copies
+Inspection Reports
+Photos
+Manuals
+```
+
+Revision maintain pannuvanga.
+
+---
+
+# STEP 26 — Final Testing
+
+Testing stage complete pannuvanga.
+
+---
+
+## Example
+
+```text id="0p6vy0"
+Motor Testing → PASS
+Sensor Calibration → PASS
+```
+
+---
+
+# STEP 27 — Project Completion
+
+Project status:
+
+```text id="1ex1ri"
+COMPLETED
+```
+
+---
+
+# STEP 28 — Reports & Analytics
+
+Management reports pakalam.
+
+---
+
+## Example Reports
+
+```text id="on0wdb"
+Project Cost
+Material Usage
+Supplier Performance
+Delay Analysis
+Stock Consumption
+```
+
+---
+
+# COMPLETE REAL FLOW
+
+```text id="76vdvm"
+Setup Masters
+     ↓
+Create Project
+     ↓
+Planning
+     ↓
+WBS / Tasks
+     ↓
+Scheduling
+     ↓
+Team Allocation
+     ↓
+BOM Creation
+     ↓
+Inventory Check
+     ↓
+Material Reservation
+     ↓
+Shortage Analysis
+     ↓
+Purchase Request
+     ↓
+Approval
+     ↓
+RFQ
+     ↓
+Quotation
+     ↓
+Purchase Order
+     ↓
+GRN
+     ↓
+QC
+     ↓
+Stock Update
+     ↓
+Dispatch
+     ↓
+Delivery
+     ↓
+Project Execution
+     ↓
+Progress Tracking
+     ↓
+Document Management
+     ↓
+Project Completion
+     ↓
+Reports
+```
+
+---
+
+# REAL BUSINESS VALUE
+
+Indha ERP use panna:
+
+✅ Manual excel reduce
+✅ Material shortage avoid
+✅ Real-time stock visibility
+✅ Project delay control
+✅ Procurement automation
+✅ Document centralization
+✅ Approval tracking
+✅ Cost control
+✅ Delivery monitoring
+✅ Engineering workflow automation
+
+---
+
+# MOST IMPORTANT CONNECTIONS
+
+| Module      | Connected With          |
+| ----------- | ----------------------- |
+| Projects    | Tasks, BOM, Procurement |
+| BOM         | Inventory, Procurement  |
+| Procurement | Suppliers, Warehouse    |
+| Warehouse   | Logistics               |
+| Logistics   | Project Execution       |
+| Documents   | Entire System           |
+
+---
+
+# FINAL UNDERSTANDING
+
+Indha system oda core logic:
+
+```text id="7m4g7m"
+Project drives everything.
+```
+
+Project based ah:
+
+* tasks create agum
+* BOM generate agum
+* procurement nadakum
+* inventory reserve agum
+* logistics dispatch agum
+* documents maintain agum
+* progress track agum
+
+ITHU THAN REAL ERP / PMS FLOW.
