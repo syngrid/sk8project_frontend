@@ -45,20 +45,20 @@ const Dashboard: React.FC = () => {
   }, []);
 
   const StatCard = ({ title, value, icon, trend }: any) => (
-    <div className="bg-white p-6 rounded-[35px] border border-primary/5 shadow-sm hover:shadow-xl transition-all duration-500 group overflow-hidden relative">
+    <div className="bg-white p-6 rounded-xl border border-primary/5 shadow-sm hover:shadow-xl transition-all duration-500 group overflow-hidden relative">
       <div className="flex items-start justify-between relative z-10">
-        <div className="p-4 rounded-2xl bg-primary/[0.03] text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
+        <div className="p-4 rounded-lg bg-primary/[0.03] text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
           {icon}
         </div>
-        <div className={`flex items-center gap-1 text-[10px] font-black uppercase tracking-widest ${trend > 0 ? 'text-green-500' : 'text-slate-400'}`}>
+        <div className={`flex items-center gap-1 text-xs font-semibold uppercase tracking-widest ${trend > 0 ? 'text-green-500' : 'text-slate-400'}`}>
           {trend > 0 ? <ArrowUpRight size={14} /> : <Activity size={14} />}
           {trend > 0 ? `+${trend}%` : 'Stable'}
         </div>
       </div>
       <div className="mt-6 relative z-10">
-        <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{title}</h3>
+        <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-[0.2em]">{title}</h3>
         <div className="flex items-baseline gap-2 mt-1">
-          <p className="text-2xl font-black text-black tracking-tight">
+          <p className="text-2xl font-semibold text-black tracking-tight">
             {typeof value === 'number' && value > 1000 ? `${(value/1000).toFixed(1)}k` : value}
           </p>
         </div>
@@ -71,7 +71,7 @@ const Dashboard: React.FC = () => {
       <div className="h-full flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <Activity className="animate-spin text-primary/20" size={40} />
-          <p className="text-[10px] font-black text-primary/20 uppercase tracking-[0.4em]">Optimizing Engine</p>
+          <p className="text-xs font-semibold text-primary/20 uppercase tracking-[0.4em]">Optimizing Engine</p>
         </div>
       </div>
     );
@@ -82,13 +82,13 @@ const Dashboard: React.FC = () => {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 px-2">
         <div>
-          <h1 className="text-xl font-black text-black tracking-tighter uppercase italic">SK8 Intelligence Hub</h1>
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1 italic">Enterprise Performance Monitoring</p>
+          <h1 className="text-xl font-semibold text-black tracking-tighter uppercase italic">SK8 Intelligence Hub</h1>
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1 italic">Enterprise Performance Monitoring</p>
         </div>
         <div className="flex items-center gap-3">
           <div className="px-5 py-2.5 bg-slate-50 border border-slate-100 rounded-full flex items-center gap-3">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
-            <span className="text-[9px] font-black text-slate-600 uppercase tracking-[0.2em]">Operational</span>
+            <span className="text-xs font-semibold text-slate-600 uppercase tracking-[0.2em]">Operational</span>
           </div>
         </div>
       </div>
@@ -105,19 +105,19 @@ const Dashboard: React.FC = () => {
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 flex-1 min-h-[400px]">
         
         {/* Project Health Chart Placeholder */}
-        <div className="xl:col-span-2 bg-white rounded-[45px] border border-primary/5 shadow-sm p-10 flex flex-col relative overflow-hidden group">
+        <div className="xl:col-span-2 bg-white rounded-xl border border-primary/5 shadow-sm p-10 flex flex-col relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-10 text-slate-50 group-hover:text-primary/5 transition-colors">
              <BarChart3 size={200} strokeWidth={1} />
           </div>
           
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="p-3 bg-slate-50 rounded-2xl text-black">
+              <div className="p-3 bg-slate-50 rounded-lg text-black">
                 <TrendingUp size={20} />
               </div>
               <div>
-                 <h2 className="text-xs font-black text-black uppercase tracking-[0.2em]">Live Operation Pulse</h2>
-                 <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5 italic">Real-time Project Execution Data</p>
+                 <h2 className="text-xs font-semibold text-black uppercase tracking-[0.2em]">Live Operation Pulse</h2>
+                 <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-0.5 italic">Real-time Project Execution Data</p>
               </div>
             </div>
             
@@ -128,8 +128,8 @@ const Dashboard: React.FC = () => {
                  { label: 'Stock Accuracy', value: '99.8%', color: 'text-green-500' }
                ].map((item, i) => (
                  <div key={i} className="space-y-2">
-                    <p className="text-[9px] font-black text-slate-300 uppercase tracking-widest">{item.label}</p>
-                    <p className={`text-xl font-black ${item.color} tracking-tighter`}>{item.value}</p>
+                    <p className="text-xs font-semibold text-slate-300 uppercase tracking-widest">{item.label}</p>
+                    <p className={`text-xl font-semibold ${item.color} tracking-tighter`}>{item.value}</p>
                  </div>
                ))}
             </div>
@@ -137,12 +137,12 @@ const Dashboard: React.FC = () => {
         </div>
 
         {/* Action Hub */}
-        <div className="bg-primary p-10 rounded-[45px] shadow-2xl flex flex-col justify-between relative overflow-hidden group">
+        <div className="bg-primary p-10 rounded-xl shadow-2xl flex flex-col justify-between relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 -mr-32 -mt-32 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000" />
           
           <div className="relative z-10">
-            <h2 className="text-white text-[11px] font-black uppercase tracking-[0.3em] italic">Strategic Hub</h2>
-            <p className="text-white/40 text-[8px] font-bold uppercase mt-1 tracking-widest">Execute Priority Decisions</p>
+            <h2 className="text-white text-[11px] font-semibold uppercase tracking-[0.3em] italic">Strategic Hub</h2>
+            <p className="text-white/40 text-xs font-bold uppercase mt-1 tracking-widest">Execute Priority Decisions</p>
             
             <div className="mt-12 space-y-4">
               {[
@@ -151,7 +151,7 @@ const Dashboard: React.FC = () => {
               ].map((act, i) => (
                 <button key={i} className="w-full p-6 bg-white/5 border border-white/10 rounded-[30px] flex items-center justify-between group/btn hover:bg-white hover:text-primary transition-all duration-500">
                   <div className="text-left">
-                    <p className="text-[10px] font-black uppercase tracking-widest">{act.label}</p>
+                    <p className="text-xs font-semibold uppercase tracking-widest">{act.label}</p>
                     <p className="text-[7px] font-bold opacity-40 uppercase mt-0.5 tracking-[0.2em]">{act.sub}</p>
                   </div>
                   <Plus size={16} className="opacity-40 group-hover/btn:rotate-90 group-hover/btn:opacity-100 transition-all" />
@@ -162,8 +162,8 @@ const Dashboard: React.FC = () => {
 
           <div className="mt-10 pt-10 border-t border-white/10 relative z-10">
             <div className="flex items-center justify-between text-white/60">
-              <span className="text-[9px] font-black uppercase tracking-[0.3em]">System Health Index</span>
-              <span className="text-2xl font-black text-white italic tracking-tighter">99.9%</span>
+              <span className="text-xs font-semibold uppercase tracking-[0.3em]">System Health Index</span>
+              <span className="text-2xl font-semibold text-white italic tracking-tighter">99.9%</span>
             </div>
             <div className="h-2 w-full bg-white/5 rounded-full mt-4 overflow-hidden">
               <div className="h-full bg-white w-[99.9%] rounded-full shadow-[0_0_20px_rgba(255,255,255,0.6)]" />

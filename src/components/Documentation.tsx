@@ -179,21 +179,21 @@ const Documentation: React.FC = () => {
           {currentFolder && (
             <button 
               onClick={navigateBack}
-              className="p-3 bg-white rounded-2xl shadow-sm hover:bg-slate-50 transition-all text-slate-400 hover:text-black"
+              className="p-3 bg-white rounded-lg shadow-sm hover:bg-slate-50 transition-all text-slate-400 hover:text-black"
             >
               <ArrowLeft size={20} />
             </button>
           )}
           <div>
-            <h1 className="text-3xl font-black text-black uppercase tracking-tight">
+            <h1 className="text-3xl font-semibold text-black capitalize tracking-tight">
               {currentFolder ? currentFolder.name : 'Documentation'}
             </h1>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">
+              <span className="text-xs font-semibold capitalize tracking-widest text-slate-400">
                 {folders.length + docs.length} Items Total
               </span>
               <span className="w-1 h-1 rounded-full bg-slate-300"></span>
-              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Secure Storage</span>
+              <span className="text-xs font-semibold capitalize tracking-widest text-slate-400">Secure Storage</span>
             </div>
           </div>
         </div>
@@ -205,19 +205,19 @@ const Documentation: React.FC = () => {
               placeholder="Search..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-64 bg-white border border-slate-200 rounded-2xl pl-12 pr-4 py-3 text-xs font-bold focus:ring-2 focus:ring-black/5 transition-all shadow-sm" 
+              className="w-64 bg-white border border-slate-200 rounded-lg pl-12 pr-4 py-3 text-xs font-bold focus:ring-2 focus:ring-black/5 transition-all shadow-sm" 
             />
           </div>
           <button 
             onClick={() => { setIsEditing(false); setNewFolderName(''); setIsFolderModalOpen(true); }}
-            className="bg-white text-black border border-slate-200 px-6 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-50 transition-all shadow-sm flex items-center gap-3"
+            className="bg-white text-black border border-slate-200 px-6 py-4 rounded-lg text-xs font-semibold capitalize tracking-widest hover:bg-slate-50 transition-all shadow-sm flex items-center gap-3"
           >
             <Plus size={16} />
             Create Folder
           </button>
           <button 
             onClick={() => setIsUploadModalOpen(true)}
-            className="bg-black text-white px-6 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-all shadow-xl shadow-black/10 flex items-center gap-3"
+            className="bg-black text-white px-6 py-4 rounded-lg text-xs font-semibold capitalize tracking-widest hover:scale-105 transition-all shadow-xl shadow-black/10 flex items-center gap-3"
           >
             <Upload size={16} />
             Upload File
@@ -226,16 +226,16 @@ const Documentation: React.FC = () => {
       </div>
 
       {/* File List */}
-      <div className="flex-1 bg-white rounded-[40px] border border-slate-100 shadow-sm overflow-hidden flex flex-col">
+      <div className="flex-1 bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden flex flex-col">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-slate-50/50">
-                <th className="px-8 py-5 text-[9px] font-black uppercase tracking-widest text-slate-400">Name</th>
-                <th className="px-8 py-5 text-[9px] font-black uppercase tracking-widest text-slate-400">Project</th>
-                <th className="px-8 py-5 text-[9px] font-black uppercase tracking-widest text-slate-400 text-center">Created At</th>
-                <th className="px-8 py-5 text-[9px] font-black uppercase tracking-widest text-slate-400 text-center">Size/Count</th>
-                <th className="px-8 py-5 text-[9px] font-black uppercase tracking-widest text-slate-400 text-right">Action</th>
+                <th className="px-8 py-5 text-xs font-semibold capitalize tracking-widest text-slate-400">Name</th>
+                <th className="px-8 py-5 text-xs font-semibold capitalize tracking-widest text-slate-400">Project</th>
+                <th className="px-8 py-5 text-xs font-semibold capitalize tracking-widest text-slate-400 text-center">Created At</th>
+                <th className="px-8 py-5 text-xs font-semibold capitalize tracking-widest text-slate-400 text-center">Size/Count</th>
+                <th className="px-8 py-5 text-xs font-semibold capitalize tracking-widest text-slate-400 text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
@@ -254,34 +254,36 @@ const Documentation: React.FC = () => {
                     <tr key={f._id} className="group hover:bg-slate-50/50 transition-colors cursor-pointer" onClick={() => handleFolderClick(f)}>
                       <td className="px-8 py-6">
                         <div className="flex items-center gap-4">
-                          <div className="p-3 bg-amber-50 text-amber-500 rounded-2xl group-hover:scale-110 transition-all shadow-sm">
+                          <div className="p-3 bg-amber-50 text-amber-500 rounded-lg group-hover:scale-110 transition-all shadow-sm">
                             <Folder size={20} fill="currentColor" />
                           </div>
                           <div>
-                            <p className="text-xs font-black text-black">{f.folderName}</p>
+                            <p className="text-xs font-semibold text-black">{f.folderName}</p>
                           </div>
                         </div>
                       </td>
                       <td className="px-8 py-6">
-                        <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">{f.project}</span>
+                        <span className="text-xs font-bold text-slate-600 capitalize tracking-widest">{f.project}</span>
                       </td>
                       <td className="px-8 py-6 text-center">
-                        <span className="text-[10px] font-bold text-slate-400">{new Date(f.createdAt).toLocaleDateString()}</span>
+                        <span className="text-xs font-bold text-slate-400">{new Date(f.createdAt).toLocaleDateString()}</span>
                       </td>
-                      <td className="px-8 py-6 text-center text-[10px] font-bold text-slate-400">
+                      <td className="px-8 py-6 text-center text-xs font-bold text-slate-400">
                         {f.fileCount || 0} Files
                       </td>
                       <td className="px-8 py-6 text-right">
                         <div className="flex items-center justify-end gap-2">
                           <button 
                             onClick={(e) => openEditFolder(f, e)}
-                            className="p-2 text-slate-300 hover:text-black transition-colors"
+                            className="p-2.5 rounded-xl bg-slate-50 text-slate-400 hover:bg-black hover:text-white transition-all shadow-sm"
+                            title="Edit"
                           >
                             <Edit2 size={16} />
                           </button>
                           <button 
                             onClick={(e) => handleDeleteFolder(f._id, e)}
-                            className="p-2 text-slate-300 hover:text-red-500 transition-colors"
+                            className="p-2.5 rounded-xl bg-red-50 text-red-300 hover:bg-red-500 hover:text-white transition-all shadow-sm"
+                            title="Delete"
                           >
                             <Trash2 size={16} />
                           </button>
@@ -293,22 +295,22 @@ const Documentation: React.FC = () => {
                     <tr key={d._id} className="group hover:bg-slate-50/50 transition-colors">
                       <td className="px-8 py-6">
                         <div className="flex items-center gap-4">
-                          <div className="p-3 bg-blue-50 text-blue-500 rounded-2xl group-hover:scale-110 transition-all shadow-sm">
+                          <div className="p-3 bg-blue-50 text-blue-500 rounded-lg group-hover:scale-110 transition-all shadow-sm">
                             <File size={20} />
                           </div>
                           <div>
-                            <p className="text-xs font-black text-black">{d.documentName}</p>
-                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{d.documentType}</p>
+                            <p className="text-xs font-semibold text-black">{d.documentName}</p>
+                            <p className="text-xs font-bold text-slate-400 capitalize tracking-widest">{d.documentType}</p>
                           </div>
                         </div>
                       </td>
                       <td className="px-8 py-6">
-                        <span className="text-[10px] font-bold text-slate-600">{d.preparedBy || 'Admin'}</span>
+                        <span className="text-xs font-bold text-slate-600">{d.preparedBy || 'Admin'}</span>
                       </td>
                       <td className="px-8 py-6 text-center">
-                        <span className="text-[10px] font-bold text-slate-400">{new Date(d.createdAt).toLocaleDateString()}</span>
+                        <span className="text-xs font-bold text-slate-400">{new Date(d.createdAt).toLocaleDateString()}</span>
                       </td>
-                      <td className="px-8 py-6 text-center text-[10px] font-bold text-slate-400">
+                      <td className="px-8 py-6 text-center text-xs font-bold text-slate-400">
                         {d.size || '152 KB'}
                       </td>
                       <td className="px-8 py-6 text-right">
@@ -317,13 +319,15 @@ const Documentation: React.FC = () => {
                             href={`http://localhost:5000${d.uploadFile}`} 
                             target="_blank" 
                             rel="noreferrer"
-                            className="p-2 text-slate-300 hover:text-black transition-colors"
+                            className="p-2.5 rounded-xl bg-blue-50 text-blue-400 hover:bg-blue-600 hover:text-white transition-all shadow-sm"
+                            title="Download"
                           >
                             <Download size={16} />
                           </a>
                           <button 
                             onClick={() => handleDeleteDoc(d._id)}
-                            className="p-2 text-slate-300 hover:text-red-500 transition-colors"
+                            className="p-2.5 rounded-xl bg-red-50 text-red-300 hover:bg-red-500 hover:text-white transition-all shadow-sm"
+                            title="Delete"
                           >
                             <Trash2 size={16} />
                           </button>
@@ -336,7 +340,7 @@ const Documentation: React.FC = () => {
                       <td colSpan={5} className="py-20 text-center">
                         <div className="flex flex-col items-center gap-4 text-slate-200">
                           <HardDrive size={48} strokeWidth={1} />
-                          <p className="text-[10px] font-black uppercase tracking-widest">No matching items found</p>
+                          <p className="text-xs font-semibold capitalize tracking-widest">No matching items found</p>
                         </div>
                       </td>
                     </tr>
@@ -351,11 +355,11 @@ const Documentation: React.FC = () => {
       {/* Create/Edit Folder Modal */}
       {isFolderModalOpen && (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white rounded-[40px] w-full max-w-md shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
+          <div className="bg-white rounded-xl w-full max-w-md shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
             <div className="p-8 border-b border-slate-100 flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-black text-black uppercase tracking-tight">{isEditing ? 'Edit Folder' : 'Create Folder'}</h2>
-                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Organize your project docs</p>
+                <h2 className="text-xl font-semibold text-black capitalize tracking-tight">{isEditing ? 'Edit Folder' : 'Create Folder'}</h2>
+                <p className="text-xs font-bold text-slate-400 capitalize tracking-widest mt-1">Organize your project docs</p>
               </div>
               <button onClick={() => setIsFolderModalOpen(false)} className="text-slate-300 hover:text-black">
                 <X size={24} />
@@ -363,21 +367,21 @@ const Documentation: React.FC = () => {
             </div>
             <div className="p-8 space-y-6">
               <div>
-                <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2 ml-1">Folder Name</p>
+                <p className="text-xs font-semibold capitalize tracking-widest text-slate-400 mb-2 ml-1">Folder Name</p>
                 <input 
                   type="text" 
                   value={newFolderName}
                   onChange={(e) => setNewFolderName(e.target.value)}
                   placeholder="Enter folder name"
-                  className="w-full bg-slate-50 rounded-2xl px-5 py-4 text-xs font-bold focus:outline-none"
+                  className="w-full bg-slate-50 rounded-lg px-5 py-4 text-xs font-bold focus:outline-none"
                 />
               </div>
               <div>
-                <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2 ml-1">Link to Project</p>
+                <p className="text-xs font-semibold capitalize tracking-widest text-slate-400 mb-2 ml-1">Link to Project</p>
                 <select 
                   value={selectedProject}
                   onChange={(e) => setSelectedProject(e.target.value)}
-                  className="w-full bg-slate-50 rounded-2xl px-5 py-4 text-xs font-bold focus:outline-none"
+                  className="w-full bg-slate-50 rounded-lg px-5 py-4 text-xs font-bold focus:outline-none"
                 >
                   <option value="">Select Project</option>
                   {projects.map(p => <option key={p._id} value={p.projectName}>{p.projectName}</option>)}
@@ -386,13 +390,13 @@ const Documentation: React.FC = () => {
               <div className="flex gap-3">
                 <button 
                   onClick={() => setIsFolderModalOpen(false)}
-                  className="flex-1 px-8 py-5 rounded-2xl text-[10px] font-black uppercase tracking-widest text-slate-400 hover:bg-slate-50 transition-colors"
+                  className="flex-1 px-8 py-5 rounded-lg text-xs font-semibold capitalize tracking-widest text-slate-400 hover:bg-slate-50 transition-colors"
                 >
                   Cancel
                 </button>
                 <button 
                   onClick={handleCreateFolder}
-                  className="flex-[2] bg-black text-white px-8 py-5 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl shadow-black/20 hover:scale-105 transition-all"
+                  className="flex-[2] bg-black text-white px-8 py-5 rounded-lg text-xs font-semibold capitalize tracking-widest shadow-xl shadow-black/20 hover:scale-105 transition-all"
                 >
                   {isEditing ? 'Update Folder' : 'Save Folder'}
                 </button>
@@ -405,11 +409,11 @@ const Documentation: React.FC = () => {
       {/* Upload Modal */}
       {isUploadModalOpen && (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white rounded-[40px] w-full max-w-md shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
+          <div className="bg-white rounded-xl w-full max-w-md shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
             <div className="p-8 border-b border-slate-100 flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-black text-black uppercase tracking-tight">Upload File</h2>
-                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Add documents to this folder</p>
+                <h2 className="text-xl font-semibold text-black capitalize tracking-tight">Upload File</h2>
+                <p className="text-xs font-bold text-slate-400 capitalize tracking-widest mt-1">Add documents to this folder</p>
               </div>
               <button onClick={() => setIsUploadModalOpen(false)} className="text-slate-300 hover:text-black">
                 <X size={24} />
@@ -417,11 +421,11 @@ const Documentation: React.FC = () => {
             </div>
             <div className="p-8 space-y-6">
               <div>
-                <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2 ml-1">Document Type</p>
+                <p className="text-xs font-semibold capitalize tracking-widest text-slate-400 mb-2 ml-1">Document Type</p>
                 <select 
                   value={uploadDocType}
                   onChange={(e) => setUploadDocType(e.target.value)}
-                  className="w-full bg-slate-50 rounded-2xl px-5 py-4 text-xs font-bold focus:outline-none"
+                  className="w-full bg-slate-50 rounded-lg px-5 py-4 text-xs font-bold focus:outline-none"
                 >
                   <option value="PDF">PDF Document</option>
                   <option value="CAD">CAD File</option>
@@ -430,7 +434,7 @@ const Documentation: React.FC = () => {
                 </select>
               </div>
               <div className="relative">
-                <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2 ml-1">File</p>
+                <p className="text-xs font-semibold capitalize tracking-widest text-slate-400 mb-2 ml-1">File</p>
                 <input 
                   type="file" 
                   onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
@@ -442,7 +446,7 @@ const Documentation: React.FC = () => {
                   className="w-full flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-3xl p-8 cursor-pointer hover:bg-slate-50 transition-all gap-3"
                 >
                   <div className="p-4 bg-slate-100 rounded-full text-slate-400"><Upload size={24} /></div>
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                  <p className="text-xs font-semibold text-slate-400 capitalize tracking-widest">
                     {selectedFile ? selectedFile.name : 'Click to select file'}
                   </p>
                 </label>
@@ -450,13 +454,13 @@ const Documentation: React.FC = () => {
               <div className="flex gap-3">
                 <button 
                   onClick={() => setIsUploadModalOpen(false)}
-                  className="flex-1 px-8 py-5 rounded-2xl text-[10px] font-black uppercase tracking-widest text-slate-400 hover:bg-slate-50 transition-colors"
+                  className="flex-1 px-8 py-5 rounded-lg text-xs font-semibold capitalize tracking-widest text-slate-400 hover:bg-slate-50 transition-colors"
                 >
                   Cancel
                 </button>
                 <button 
                   onClick={handleFileUpload}
-                  className="flex-[2] bg-black text-white px-8 py-5 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl shadow-black/20 hover:scale-105 transition-all"
+                  className="flex-[2] bg-black text-white px-8 py-5 rounded-lg text-xs font-semibold capitalize tracking-widest shadow-xl shadow-black/20 hover:scale-105 transition-all"
                 >
                   Start Upload
                 </button>

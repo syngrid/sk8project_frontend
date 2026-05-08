@@ -48,7 +48,7 @@ const Login: React.FC = () => {
   return (
     <div className="flex min-h-screen bg-white overflow-hidden font-sans">
       {/* Balanced Left Side */}
-      <div className="hidden lg:flex lg:w-1/2 bg-primary items-center justify-center p-16 relative overflow-hidden rounded-r-[80px] shadow-2xl">
+      <div className="hidden lg:flex lg:w-1/2 bg-primary items-center justify-center p-16 relative overflow-hidden rounded-xl shadow-2xl">
         <div className="absolute inset-0 bg-white/10 opacity-50 blur-[100px] animate-pulse"></div>
         <div className="relative z-10 w-full max-w-md animate-fade-in flex flex-col items-center">
           <img 
@@ -63,10 +63,10 @@ const Login: React.FC = () => {
       {/* Balanced Right Side */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white relative">
         <div className="w-full max-w-[420px] animate-fade-in">
-          <div className="bg-white p-12 md:p-14 rounded-[50px] shadow-[0_25px_60px_rgba(221,153,51,0.15)] border border-primary/5">
+          <div className="bg-white p-12 md:p-14 rounded-xl shadow-[0_25px_60px_rgba(221,153,51,0.15)] border border-primary/5">
             {/* Logo */}
             <div className="flex justify-center mb-12">
-              <div className="h-14 flex items-center p-3 bg-white rounded-2xl shadow-sm border border-primary/5">
+              <div className="h-14 flex items-center p-3 bg-white rounded-lg shadow-sm border border-primary/5">
                 <img 
                   src="/company_Logo.png" 
                   alt="" 
@@ -77,7 +77,7 @@ const Login: React.FC = () => {
 
             <form onSubmit={handleLogin} className="space-y-6">
               {error && (
-                <div className="bg-primary/5 border border-primary/10 text-primary p-4 rounded-2xl font-black text-center animate-shake">
+                <div className="bg-primary/5 border border-primary/10 text-primary p-4 rounded-lg font-semibold text-center animate-shake">
                   !
                 </div>
               )}
@@ -93,7 +93,7 @@ const Login: React.FC = () => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full pl-14 pr-5 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm text-black focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/30 transition-all font-bold"
+                    className="block w-full pl-14 pr-5 py-4 bg-slate-50 border border-slate-100 rounded-lg text-sm text-black focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/30 transition-all font-bold"
                     placeholder="Email"
                   />
                 </div>
@@ -110,7 +110,7 @@ const Login: React.FC = () => {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full pl-14 pr-14 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm text-black focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/30 transition-all font-bold"
+                    className="block w-full pl-14 pr-14 py-4 bg-slate-50 border border-slate-100 rounded-lg text-sm text-black focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/30 transition-all font-bold"
                     placeholder="Password"
                   />
                   <button
@@ -126,7 +126,7 @@ const Login: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4.5 bg-primary hover:bg-secondary text-white font-black rounded-2xl shadow-xl shadow-primary/20 transform active:scale-[0.97] transition-all flex items-center justify-center gap-3 mt-4 group"
+                className="w-full py-4.5 bg-primary hover:bg-secondary text-white font-semibold rounded-lg shadow-xl shadow-primary/20 transform active:scale-[0.97] transition-all flex items-center justify-center gap-3 mt-4 group"
               >
                 {loading ? <Loader2 className="animate-spin" /> : (
                   <>

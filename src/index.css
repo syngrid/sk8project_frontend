@@ -2,12 +2,12 @@
 
 @theme {
   --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --color-primary: #DD9933;
-  --color-secondary: #F2B136;
+  --color-primary: #1e293b;
+  --color-secondary: #2563eb;
   --color-white: #FFFFFF;
-  --color-sidebar-bg: #DD9933;
+  --color-sidebar-bg: #1e293b;
   --color-navbar-bg: #FFFFFF;
-  --color-content-bg: #FFFFFF;
+  --color-content-bg: #f8fafc;
 }
 
 @layer base {

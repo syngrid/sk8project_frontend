@@ -12,16 +12,16 @@ const GRN: React.FC = () => {
   ];
   return (
     <div className="space-y-4">
-      <div className="bg-white rounded-[28px] border border-slate-100 shadow-sm p-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+      <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div>
-          <p className="text-[10px] font-black uppercase tracking-[0.25em] text-black">Stock In Header</p>
-          <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400 mt-1">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-black">Stock In Header</p>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 mt-1">
             Item name, category, and unit are shown in <span className="text-black">Stock In</span>.
           </p>
         </div>
         <a
           href="/GRNItems"
-          className="inline-flex items-center justify-center px-5 py-3 rounded-full bg-black text-white text-[9px] font-black uppercase tracking-[0.25em] hover:bg-slate-800 transition-all"
+          className="inline-flex items-center justify-center px-5 py-3 rounded-full bg-black text-white text-xs font-semibold uppercase tracking-[0.25em] hover:bg-slate-800 transition-all"
         >
           Open Stock In
         </a>

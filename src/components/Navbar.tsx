@@ -31,7 +31,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
         {/* Mobile Toggle */}
         <button 
           onClick={onMenuClick}
-          className="lg:hidden p-3 bg-white/10 hover:bg-white/20 text-white rounded-2xl transition-all border border-white/10"
+          className="lg:hidden p-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-all border border-white/10"
         >
           <Menu size={22} />
         </button>
@@ -44,22 +44,22 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
           onClick={() => setShowDropdown(!showDropdown)}
         >
           <div className="text-right hidden md:block">
-            <p className="text-sm font-black text-white leading-none mb-1">Admin</p>
-            <p className="text-[10px] font-black text-white uppercase tracking-widest">{admin?.email || 'Administrator'}</p>
+            <p className="text-sm font-semibold text-white leading-none mb-1">Admin</p>
+            <p className="text-xs font-semibold text-white uppercase tracking-widest">{admin?.email || 'Administrator'}</p>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-white border-4 border-primary shadow-xl flex items-center justify-center text-primary transform group-hover:scale-105 transition-all">
+          <div className="w-11 h-11 rounded-lg bg-white border-4 border-primary shadow-xl flex items-center justify-center text-primary transform group-hover:scale-105 transition-all">
              <ShieldCheck size={24} />
           </div>
 
           {/* Logout Dropdown */}
           {showDropdown && (
-            <div className="absolute top-full right-0 mt-4 w-48 bg-white rounded-2xl shadow-2xl border border-primary/5 p-2 animate-fade-in z-[60]">
+            <div className="absolute top-full right-0 mt-4 w-48 bg-white rounded-lg shadow-2xl border border-primary/5 p-2 animate-fade-in z-[60]">
                <button 
                 onClick={(e) => {
                   e.stopPropagation();
                   handleLogout();
                 }}
-                className="w-full flex items-center gap-3 p-4 hover:bg-primary/5 text-primary rounded-xl transition-all font-black text-xs uppercase tracking-widest"
+                className="w-full flex items-center gap-3 p-4 hover:bg-primary/5 text-primary rounded-xl transition-all font-semibold text-xs uppercase tracking-widest"
                >
                   <LogOut size={18} />
                   Logout

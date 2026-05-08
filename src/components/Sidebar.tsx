@@ -32,7 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       items: [
         { name: 'Users', icon: <UserCircle size={18} />, path: '/User' },
         { name: 'Roles', icon: <Shield size={18} />, path: '/Role' },
-        { name: 'Depts', icon: <Briefcase size={18} />, path: '/Department' },
+        { name: 'Departments', icon: <Briefcase size={18} />, path: '/Department' },
         { name: 'Suppliers', icon: <Truck size={18} />, path: '/Suppliers' },
         { name: 'Cost Centers', icon: <Landmark size={18} />, path: '/CostCenters' },
       ]
@@ -79,11 +79,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     },
     {
       id: 'bom',
-      label: 'BOM',
+      label: 'Bill Of Materials',
       icon: <FileSpreadsheet size={22} />,
       items: [
-        { name: 'BOM Master', icon: <FileSpreadsheet size={18} />, path: '/BOMMaster' },
-        { name: 'BOM Items', icon: <ListTodo size={18} />, path: '/BOMItems' },
+        { name: 'Bill Of Materials Master', icon: <FileSpreadsheet size={18} />, path: '/BOMMaster' },
+        { name: 'Bill Of Materials Items', icon: <ListTodo size={18} />, path: '/BOMItems' },
       ]
     },
     {
@@ -131,7 +131,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       `}>
         <div className="p-4 mb-2 flex items-center justify-between relative overflow-visible">
           <div className={`
-             bg-white rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300
+             bg-white rounded-lg flex items-center justify-center shadow-lg transition-all duration-300
              ${isCollapsed ? 'w-12 h-12 p-2' : 'w-[160px] h-[54px] px-4 py-2'}
           `}>
             <img src="/company_Logo.png" alt="" className="h-full w-auto object-contain" />
@@ -154,7 +154,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           <Link
             to="/Dashboard"
             onClick={onClose}
-            className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all font-black text-[11px] uppercase tracking-widest ${
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all font-semibold text-base capitalize tracking-widest ${
               location.pathname === '/Dashboard'
                 ? 'bg-white text-primary shadow-md'
                 : 'text-white hover:bg-white/10'
@@ -171,7 +171,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   to={section.path}
                   onClick={onClose}
                   className={`
-                    w-full flex items-center gap-4 px-3.5 py-3 rounded-2xl transition-all font-black text-[10px] uppercase tracking-widest group/item
+                    w-full flex items-center gap-4 px-3.5 py-3 rounded-lg transition-all font-semibold text-sm capitalize tracking-widest group/item
                     ${location.pathname === section.path ? 'bg-white text-primary shadow-md' : 'text-white hover:bg-white/5'}
                   `}
                 >
@@ -183,7 +183,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   <button
                     onClick={() => toggleSection(section.id)}
                     className={`
-                        w-full flex items-center justify-between gap-4 px-3.5 py-3 rounded-2xl transition-all font-black text-[10px] uppercase tracking-widest group/item
+                        w-full flex items-center justify-between gap-4 px-3.5 py-3 rounded-lg transition-all font-semibold text-sm capitalize tracking-widest group/item
                         ${openSection === section.id && !isCollapsed ? 'text-white' : 'text-white hover:bg-white/5'}
                       `}
                   >
@@ -196,7 +196,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     )}
 
                     {isCollapsed && (
-                      <div className="fixed left-[95px] px-3 py-2 bg-white text-primary text-[10px] font-black uppercase tracking-widest rounded-xl shadow-2xl opacity-0 translate-x-[-10px] pointer-events-none transition-all duration-200 group-hover/item:opacity-100 group-hover/item:translate-x-0 z-[110]">
+                      <div className="fixed left-[95px] px-3 py-2 bg-white text-primary text-xs font-semibold capitalize tracking-widest rounded-xl shadow-2xl opacity-0 translate-x-[-10px] pointer-events-none transition-all duration-200 group-hover/item:opacity-100 group-hover/item:translate-x-0 z-[110]">
                         {section.label}
                         <div className="absolute top-1/2 left-0 -ml-1 -mt-1 w-2 h-2 bg-white rotate-45"></div>
                       </div>
@@ -213,7 +213,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                         to={item.path}
                         onClick={onClose}
                     className={`
-                         flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all font-bold text-[11px]
+                         flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all font-bold text-sm
                          ${location.pathname === item.path
                         ? 'bg-white text-primary shadow-md'
                         : 'text-white hover:bg-white/10'}
