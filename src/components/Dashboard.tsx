@@ -23,10 +23,8 @@ import {
 import api from '../utils/api';
 
 type NamedCount = { name: string; v: number };
-type KpiDelta = { label: string; value: number; trend: 'up' | 'down' | 'flat' };
 
 const DONUT_STROKE = '#ffffff';
-const SHADOW = 'shadow-[0_10px_30px_rgba(15,23,42,0.06)]';
 
 /** Normalize list endpoints: body may be a raw array or wrapped as { data: [...] }. */
 const extractList = (res: { data?: unknown } | undefined): Record<string, unknown>[] => {
@@ -53,31 +51,16 @@ const formatStatusLabel = (raw: string) =>
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
     .join(' ');
 
-const pctText = (delta: KpiDelta | undefined) => {
-  if (!delta) return null;
-  const sign = delta.trend === 'up' ? '+' : delta.trend === 'down' ? '−' : '';
-  const color =
-    delta.trend === 'up' ? 'text-emerald-700' : delta.trend === 'down' ? 'text-red-700' : 'text-slate-700';
-  return (
-    <span className={`text-xs font-semibold tabular-nums ${color}`}>
-      {sign}
-      {Math.abs(delta.value)}% <span className="font-semibold text-slate-700">vs last month</span>
-    </span>
-  );
-};
-
 const KpiCard = ({
   title,
   value,
   icon,
   iconBg,
-  delta,
 }: {
   title: string;
   value: number | string;
   icon: React.ReactNode;
   iconBg: string;
-  delta?: KpiDelta;
 }) => (
   <div
     className={`rounded-2xl bg-white border border-slate-100 px-4 py-3.5 flex items-start gap-3`}
@@ -90,20 +73,6 @@ const KpiCard = ({
       <p className="mt-0.5 text-xl font-semibold text-slate-900 tracking-tight tabular-nums">{value}</p>
       {/* <div className="mt-0.5">{pctText(delta)}</div> */}
     </div>
-  </div>
-);
-
-const DonutLegend = ({ rows }: { rows: { name: string; value: string }[] }) => (
-  <div className="space-y-2">
-    {rows.map((r) => (
-      <div key={r.name} className="flex items-center justify-between gap-4 text-xs">
-        <div className="flex items-center gap-2 min-w-0">
-          <span className="h-2 w-2 rounded-full bg-emerald-500" />
-          <span className="text-slate-600 truncate">{r.name}</span>
-        </div>
-        <span className="text-slate-900 font-semibold tabular-nums">{r.value}</span>
-      </div>
-    ))}
   </div>
 );
 
@@ -284,35 +253,30 @@ const Dashboard: React.FC = () => {
             value={loading ? '—' : stats.totalProjects}
             icon={<FolderOpen size={18} className="text-blue-700" />}
             iconBg="bg-blue-100"
-            delta={{ label: 'projects', value: 12, trend: 'up' }}
           />
           <KpiCard
             title="Active Projects"
             value={loading ? '—' : stats.activeProjects}
             icon={<BarChart3 size={18} className="text-emerald-700" />}
             iconBg="bg-emerald-100"
-            delta={{ label: 'projects', value: 8, trend: 'up' }}
           />
           <KpiCard
             title="Delayed Projects"
             value={loading ? '—' : stats.delayedProjects}
             icon={<Clock3 size={18} className="text-orange-700" />}
             iconBg="bg-orange-100"
-            delta={{ label: 'projects', value: 2, trend: 'down' }}
           />
           <KpiCard
             title="Pending Approvals"
             value={loading ? '—' : stats.pendingApprovals}
             icon={<ClipboardCheck size={18} className="text-violet-700" />}
             iconBg="bg-violet-100"
-            delta={{ label: 'approvals', value: 7, trend: 'up' }}
           />
           <KpiCard
             title="Material Shortages"
             value={loading ? '—' : stats.materialShortages}
             icon={<TriangleAlert size={18} className="text-red-700" />}
             iconBg="bg-red-100"
-            delta={{ label: 'shortages', value: 15, trend: 'down' }}
           />
         </div>
 
