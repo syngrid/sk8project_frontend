@@ -48,7 +48,7 @@ const Login: React.FC = () => {
   return (
     <div className="flex min-h-screen bg-white overflow-hidden font-sans">
       {/* Balanced Left Side */}
-      <div className="hidden lg:flex lg:w-1/2 bg-primary items-center justify-center p-16 relative overflow-hidden rounded-xl shadow-2xl">
+      <div className="hidden lg:flex lg:w-1/2 bg-primary items-center justify-center p-16 relative overflow-hidden shadow-2xl">
         <div className="absolute inset-0 bg-white/10 opacity-50 blur-[100px] animate-pulse"></div>
         <div className="relative z-10 w-full max-w-md animate-fade-in flex flex-col items-center">
           <img 

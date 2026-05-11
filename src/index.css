@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Outfit", sans-serif;
   --color-primary: #1e293b;
   --color-secondary: #2563eb;
   --color-white: #FFFFFF;
