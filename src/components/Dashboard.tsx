@@ -1,176 +1,297 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  TrendingUp, Users, Briefcase, Boxes, ShoppingCart, 
-  ArrowUpRight, Activity, Plus, BarChart3
-} from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Briefcase, Boxes, Users, FileSpreadsheet, ListTodo, MoveRight } from 'lucide-react';
+import {
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Legend,
+  Tooltip,
+} from 'recharts';
 import api from '../utils/api';
 
+type NamedCount = { name: string; v: number };
+
+const CHART_FILL = ['#0f172a', '#1e293b', '#334155', '#475569', '#64748b', '#94a3b8'];
+
+const axisTick = { fill: '#64748b', fontSize: 11 };
+
+/** Normalize list endpoints: body may be a raw array or wrapped as { data: [...] }. */
+const extractList = (res: { data?: unknown } | undefined): Record<string, unknown>[] => {
+  if (!res?.data) return [];
+  const d = res.data;
+  if (Array.isArray(d)) return d as Record<string, unknown>[];
+  if (typeof d === 'object' && d !== null && 'data' in d && Array.isArray((d as { data: unknown }).data)) {
+    return (d as { data: Record<string, unknown>[] }).data;
+  }
+  return [];
+};
+
+const logRejected = (label: string, r: PromiseSettledResult<unknown>) => {
+  if (r.status === 'rejected') {
+    const err = r.reason as { message?: string; response?: { status?: number; data?: unknown } };
+    console.warn(`[Dashboard] ${label} failed:`, err?.message, err?.response?.status, err?.response?.data);
+  }
+};
+
+const formatStatusLabel = (raw: string) =>
+  raw
+    .replace(/[-_]/g, ' ')
+    .split(/\s+/)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(' ');
+
+function aggregateTaskStatus(tasks: Record<string, unknown>[]): NamedCount[] {
+  const map = new Map<string, number>();
+  for (const t of tasks) {
+    const raw = String(t.taskStatus ?? 'Unknown').trim() || 'Unknown';
+    map.set(raw, (map.get(raw) ?? 0) + 1);
+  }
+  return [...map.entries()]
+    .map(([name, v]) => ({ name: formatStatusLabel(name), v }))
+    .sort((a, b) => b.v - a.v);
+}
+
+function prsLastSixMonths(prs: Record<string, unknown>[]): NamedCount[] {
+  const now = new Date();
+  const rows: NamedCount[] = [];
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const mo = d.toLocaleString('en', { month: 'short' });
+    const yr = String(d.getFullYear()).slice(-2);
+    const label = `${mo} '${yr}`;
+    const y = d.getFullYear();
+    const m = d.getMonth();
+    let v = 0;
+    for (const p of prs) {
+      const raw = p.createdAt ?? p.requestDate;
+      if (!raw) continue;
+      const c = new Date(String(raw));
+      if (c.getMonth() === m && c.getFullYear() === y) v += 1;
+    }
+    rows.push({ name: label, v });
+  }
+  return rows;
+}
+
+function isPrOpen(p: Record<string, unknown>): boolean {
+  const s = String(p.approvalStatus ?? '');
+  const closed = ['Approved', 'Rejected', 'Cancelled', 'PO Created'];
+  return !closed.includes(s);
+}
+
+function isTaskOpen(t: Record<string, unknown>): boolean {
+  const s = String(t.taskStatus ?? '').toLowerCase();
+  return s !== 'completed';
+}
+
+const StatCard = ({
+  title,
+  value,
+  icon,
+}: {
+  title: string;
+  value: number | string;
+  icon: React.ReactNode;
+}) => (
+  <div className="bg-white p-5 rounded-xl border border-primary/5 shadow-sm">
+    <div className="flex items-start justify-between gap-3">
+      <div className="p-3 rounded-lg bg-slate-50 text-primary">{icon}</div>
+    </div>
+    <p className="mt-4 text-xs font-medium text-slate-600 leading-snug">{title}</p>
+    <p className="mt-1 text-2xl font-semibold text-black tracking-tight tabular-nums">{value}</p>
+  </div>
+);
+
 const Dashboard: React.FC = () => {
+  const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     projects: 0,
     items: 0,
     users: 0,
-    pendingPRs: 0,
-    activeWorkflows: 0,
-    stockValue: 0
+    openPRs: 0,
+    openTasks: 0,
+    totalTasks: 0,
   });
-  const [loading, setLoading] = useState(true);
+  const [pieData, setPieData] = useState<NamedCount[]>([]);
+  const [barData, setBarData] = useState<NamedCount[]>(() => prsLastSixMonths([]));
 
   useEffect(() => {
-    const fetchStats = async () => {
+    const load = async () => {
       try {
-        const [projRes, itemsRes, usersRes, prRes] = await Promise.allSettled([
+        const [projRes, itemsRes, usersRes, prRes, tasksRes] = await Promise.allSettled([
           api.get('/project/projects'),
           api.get('/inventory/items'),
           api.get('/master/users'),
-          api.get('/procurement/pr')
+          api.get('/procurement/pr'),
+          api.get('/project/tasks'),
         ]);
-        
+
+        logRejected('projects', projRes);
+        logRejected('inventory items', itemsRes);
+        logRejected('users', usersRes);
+        logRejected('purchase requests', prRes);
+        logRejected('tasks', tasksRes);
+
+        const projects = projRes.status === 'fulfilled' ? extractList(projRes.value) : [];
+        const items = itemsRes.status === 'fulfilled' ? extractList(itemsRes.value) : [];
+        const users = usersRes.status === 'fulfilled' ? extractList(usersRes.value) : [];
+        const prs = prRes.status === 'fulfilled' ? extractList(prRes.value) : [];
+        const tasks = tasksRes.status === 'fulfilled' ? extractList(tasksRes.value) : [];
+
         setStats({
-          projects: projRes.status === 'fulfilled' ? projRes.value.data?.length || 0 : 0,
-          items: itemsRes.status === 'fulfilled' ? itemsRes.value.data?.length || 0 : 0,
-          users: usersRes.status === 'fulfilled' ? usersRes.value.data?.length || 0 : 0,
-          pendingPRs: prRes.status === 'fulfilled' ? (prRes.value.data?.filter((p: any) => p.approvalStatus === 'pending').length || 0) : 0,
-          activeWorkflows: 0,
-          stockValue: 0
+          projects: projects.length,
+          items: items.length,
+          users: users.length,
+          openPRs: prs.filter(isPrOpen).length,
+          openTasks: tasks.filter(isTaskOpen).length,
+          totalTasks: tasks.length,
         });
 
-      } catch (err) {
-        console.error('Error fetching dashboard stats:', err);
+        const taskPie = aggregateTaskStatus(tasks);
+        const sumPie = taskPie.reduce((s, x) => s + x.v, 0);
+        setPieData(sumPie > 0 ? taskPie : [{ name: 'No tasks', v: 1 }]);
+
+        setBarData(prsLastSixMonths(prs));
+      } catch (e) {
+        console.error('Dashboard load error:', e);
+        setPieData([{ name: 'No data', v: 1 }]);
+        setBarData(prsLastSixMonths([]));
       } finally {
         setLoading(false);
       }
     };
-    fetchStats();
+    load();
   }, []);
 
-  const StatCard = ({ title, value, icon, trend }: any) => (
-    <div className="bg-white p-6 rounded-xl border border-primary/5 shadow-sm hover:shadow-xl transition-all duration-500 group overflow-hidden relative">
-      <div className="flex items-start justify-between relative z-10">
-        <div className="p-4 rounded-lg bg-primary/[0.03] text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
-          {icon}
-        </div>
-        <div className={`flex items-center gap-1 text-xs font-semibold uppercase tracking-widest ${trend > 0 ? 'text-green-500' : 'text-slate-400'}`}>
-          {trend > 0 ? <ArrowUpRight size={14} /> : <Activity size={14} />}
-          {trend > 0 ? `+${trend}%` : 'Stable'}
-        </div>
-      </div>
-      <div className="mt-6 relative z-10">
-        <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-[0.2em]">{title}</h3>
-        <div className="flex items-baseline gap-2 mt-1">
-          <p className="text-2xl font-semibold text-black tracking-tight">
-            {typeof value === 'number' && value > 1000 ? `${(value/1000).toFixed(1)}k` : value}
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-
-  if (loading) {
-    return (
-      <div className="h-full flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <Activity className="animate-spin text-primary/20" size={40} />
-          <p className="text-xs font-semibold text-primary/20 uppercase tracking-[0.4em]">Optimizing Engine</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="h-full flex flex-col space-y-8 animate-fade-in pb-8 overflow-y-auto no-scrollbar">
-      {/* Header Section */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 px-2">
-        <div>
-          <h1 className="text-xl font-semibold text-black tracking-tighter uppercase italic">SK8 Intelligence Hub</h1>
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1 italic">Enterprise Performance Monitoring</p>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="px-5 py-2.5 bg-slate-50 border border-slate-100 rounded-full flex items-center gap-3">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
-            <span className="text-xs font-semibold text-slate-600 uppercase tracking-[0.2em]">Operational</span>
-          </div>
-        </div>
+    <div className="h-full w-full flex flex-col gap-6 p-4 lg:p-6 overflow-y-auto no-scrollbar animate-fade-in">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 shrink-0">
+        <StatCard title="Active projects" value={loading ? '—' : stats.projects} icon={<Briefcase size={20} />} />
+        <StatCard title="Inventory stock keeping units" value={loading ? '—' : stats.items} icon={<Boxes size={20} />} />
+        <StatCard title="Team members (users)" value={loading ? '—' : stats.users} icon={<Users size={20} />} />
+        <StatCard title="Open purchase requests" value={loading ? '—' : stats.openPRs} icon={<FileSpreadsheet size={20} />} />
+        <StatCard
+          title="Open tasks (open count / total tasks)"
+          value={loading ? '—' : `${stats.openTasks} / ${stats.totalTasks}`}
+          icon={<ListTodo size={20} />}
+        />
       </div>
 
-      {/* Main Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard title="Active Projects" value={stats.projects} icon={<Briefcase size={22} />} trend={0} />
-        <StatCard title="Inventory SKUs" value={stats.items} icon={<Boxes size={22} />} trend={0} />
-        <StatCard title="Requisitions" value={stats.pendingPRs} icon={<ShoppingCart size={22} />} trend={0} />
-        <StatCard title="Team Strength" value={stats.users} icon={<Users size={22} />} trend={0} />
-      </div>
-
-      {/* Analytics & Activity Section */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 flex-1 min-h-[400px]">
-        
-        {/* Project Health Chart Placeholder */}
-        <div className="xl:col-span-2 bg-white rounded-xl border border-primary/5 shadow-sm p-10 flex flex-col relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-10 text-slate-50 group-hover:text-primary/5 transition-colors">
-             <BarChart3 size={200} strokeWidth={1} />
+      <div className="flex flex-col lg:flex-row gap-2 lg:gap-0 flex-1 min-h-0 items-stretch">
+        <div className="flex-1 min-h-[min(48vh,440px)] flex flex-col bg-white rounded-xl border border-primary/5 shadow-sm overflow-hidden relative">
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage:
+                'repeating-linear-gradient(125deg, #0f172a 0px, #0f172a 1px, transparent 1px, transparent 14px)',
+            }}
+            aria-hidden
+          />
+          <div className="shrink-0 px-5 pt-5 pb-1 flex items-center gap-2 relative z-10">
+            <MoveRight className="text-primary/50 shrink-0" size={14} strokeWidth={2.25} />
+            <p className="text-xs font-medium text-slate-600">Tasks by status (all statuses)</p>
           </div>
-          
-          <div className="relative z-10">
-            <div className="flex items-center gap-4 mb-10">
-              <div className="p-3 bg-slate-50 rounded-lg text-black">
-                <TrendingUp size={20} />
-              </div>
-              <div>
-                 <h2 className="text-xs font-semibold text-black uppercase tracking-[0.2em]">Live Operation Pulse</h2>
-                 <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-0.5 italic">Real-time Project Execution Data</p>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-               {[
-                 { label: 'Procurement Cycle', value: '4.2 Days', color: 'text-green-500' },
-                 { label: 'Project Variance', value: '-2.5%', color: 'text-primary' },
-                 { label: 'Stock Accuracy', value: '99.8%', color: 'text-green-500' }
-               ].map((item, i) => (
-                 <div key={i} className="space-y-2">
-                    <p className="text-xs font-semibold text-slate-300 uppercase tracking-widest">{item.label}</p>
-                    <p className={`text-xl font-semibold ${item.color} tracking-tighter`}>{item.value}</p>
-                 </div>
-               ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Action Hub */}
-        <div className="bg-primary p-10 rounded-xl shadow-2xl flex flex-col justify-between relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 -mr-32 -mt-32 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000" />
-          
-          <div className="relative z-10">
-            <h2 className="text-white text-[11px] font-semibold uppercase tracking-[0.3em] italic">Strategic Hub</h2>
-            <p className="text-white/40 text-xs font-bold uppercase mt-1 tracking-widest">Execute Priority Decisions</p>
-            
-            <div className="mt-12 space-y-4">
-              {[
-                { label: 'New Requisition', sub: 'Project Material Request' },
-                { label: 'Dispatch Order', sub: 'Site Logistics' }
-              ].map((act, i) => (
-                <button key={i} className="w-full p-6 bg-white/5 border border-white/10 rounded-[30px] flex items-center justify-between group/btn hover:bg-white hover:text-primary transition-all duration-500">
-                  <div className="text-left">
-                    <p className="text-xs font-semibold uppercase tracking-widest">{act.label}</p>
-                    <p className="text-[7px] font-bold opacity-40 uppercase mt-0.5 tracking-[0.2em]">{act.sub}</p>
-                  </div>
-                  <Plus size={16} className="opacity-40 group-hover/btn:rotate-90 group-hover/btn:opacity-100 transition-all" />
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-10 pt-10 border-t border-white/10 relative z-10">
-            <div className="flex items-center justify-between text-white/60">
-              <span className="text-xs font-semibold uppercase tracking-[0.3em]">System Health Index</span>
-              <span className="text-2xl font-semibold text-white italic tracking-tighter">99.9%</span>
-            </div>
-            <div className="h-2 w-full bg-white/5 rounded-full mt-4 overflow-hidden">
-              <div className="h-full bg-white w-[99.9%] rounded-full shadow-[0_0_20px_rgba(255,255,255,0.6)]" />
-            </div>
+          <div className="flex-1 min-h-0 w-full min-h-[280px] relative z-10">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart margin={{ top: 8, right: 12, bottom: 64, left: 12 }}>
+                <Pie
+                  data={pieData.length ? pieData : [{ name: 'No data', v: 1 }]}
+                  dataKey="v"
+                  nameKey="name"
+                  cx="50%"
+                  cy="46%"
+                  innerRadius="40%"
+                  outerRadius="68%"
+                  paddingAngle={5}
+                  stroke="#fff"
+                  strokeWidth={2}
+                  isAnimationActive={!loading}
+                >
+                  {(pieData.length ? pieData : [{ name: 'No data', v: 1 }]).map((row, i) => (
+                    <Cell key={`${row.name}-${i}`} fill={CHART_FILL[i % CHART_FILL.length]} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  cursor={false}
+                  formatter={(value, name) => [`${Number(value ?? 0)} tasks`, String(name ?? '')]}
+                  labelFormatter={() => 'Task status'}
+                  contentStyle={{
+                    borderRadius: 8,
+                    border: '1px solid rgb(241 245 249)',
+                    fontSize: 12,
+                    boxShadow: '0 4px 12px rgb(15 23 42 / 0.06)',
+                  }}
+                />
+                <Legend
+                  verticalAlign="bottom"
+                  layout="horizontal"
+                  align="center"
+                  iconType="circle"
+                  formatter={(value) => <span className="text-slate-600">{String(value)}</span>}
+                  wrapperStyle={{
+                    fontSize: 12,
+                    paddingTop: 8,
+                    width: '100%',
+                    lineHeight: 1.45,
+                    whiteSpace: 'normal',
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
+        <div
+          className="hidden lg:flex flex-col items-center justify-center px-1 text-slate-200 select-none"
+          aria-hidden
+        >
+          <MoveRight size={22} strokeWidth={1.5} className="opacity-60" />
+          <MoveRight size={22} strokeWidth={1.5} className="-mt-1 opacity-35" />
+        </div>
+
+        <div className="flex-1 min-h-[min(48vh,440px)] flex flex-col bg-white rounded-xl border border-primary/5 shadow-sm overflow-hidden">
+          <div className="shrink-0 px-5 pt-5 pb-1">
+            <p className="text-xs font-medium text-slate-600">Purchase requests by month</p>
+          </div>
+          <div className="flex-1 min-h-0 w-full min-h-[280px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={barData}
+                margin={{ top: 12, right: 12, bottom: 28, left: 4 }}
+                barCategoryGap="20%"
+              >
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={axisTick} interval={0} />
+                <YAxis
+                  type="number"
+                  allowDecimals={false}
+                  axisLine={false}
+                  tickLine={false}
+                  tick={axisTick}
+                  width={28}
+                  domain={[0, (dataMax: number) => Math.max(1, Math.ceil(dataMax * 1.12))]}
+                />
+                <Tooltip
+                  cursor={{ fill: 'rgb(241 245 249)' }}
+                  contentStyle={{
+                    borderRadius: 6,
+                    border: '1px solid rgb(241 245 249)',
+                    fontSize: 12,
+                  }}
+                />
+                <Bar dataKey="v" radius={[6, 6, 0, 0]} maxBarSize={48} isAnimationActive={!loading}>
+                  {barData.map((row, i) => (
+                    <Cell key={`${row.name}-${i}`} fill={CHART_FILL[i % CHART_FILL.length]} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </div>
     </div>
   );
