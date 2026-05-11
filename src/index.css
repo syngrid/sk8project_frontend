@@ -48,6 +48,70 @@
   .animate-slide-up {
     animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
+
+  /* Readability: avoid overly-dim "muted" text across pages */
+  .text-slate-400 {
+    color: rgb(71 85 105) !important; /* slate-600-ish */
+  }
+  .text-slate-500 {
+    color: rgb(51 65 85) !important; /* slate-700 */
+  }
+  .text-slate-600 {
+    color: rgb(30 41 59) !important; /* slate-800 */
+  }
+
+  .text-gray-400,
+  .text-zinc-400,
+  .text-neutral-400,
+  .text-stone-400 {
+    color: rgb(71 85 105) !important; /* slate-600-ish */
+  }
+  .text-gray-500,
+  .text-zinc-500,
+  .text-neutral-500,
+  .text-stone-500 {
+    color: rgb(51 65 85) !important; /* slate-700 */
+  }
+  .text-gray-600,
+  .text-zinc-600,
+  .text-neutral-600,
+  .text-stone-600 {
+    color: rgb(30 41 59) !important; /* slate-800 */
+  }
+
+  /* Placeholder text (search inputs etc.) */
+  .placeholder\:text-slate-400::placeholder,
+  .placeholder\:text-slate-500::placeholder,
+  .placeholder\:text-gray-400::placeholder,
+  .placeholder\:text-gray-500::placeholder,
+  .placeholder\:text-zinc-400::placeholder,
+  .placeholder\:text-zinc-500::placeholder,
+  .placeholder\:text-neutral-400::placeholder,
+  .placeholder\:text-neutral-500::placeholder,
+  .placeholder\:text-stone-400::placeholder,
+  .placeholder\:text-stone-500::placeholder {
+    color: rgb(71 85 105) !important; /* readable placeholder */
+    opacity: 1 !important;
+  }
+
+  /* Dashboard: compact typography (only affects Dashboard.tsx wrapper) */
+  .dashboard-compact {
+    font-size: 12px;
+  }
+  .dashboard-compact .text-2xl {
+    font-size: 20px;
+    line-height: 1.15;
+  }
+  .dashboard-compact .text-xl {
+    font-size: 18px;
+    line-height: 1.15;
+  }
+  .dashboard-compact .text-sm {
+    font-size: 12px;
+  }
+  .dashboard-compact .text-xs {
+    font-size: 11px;
+  }
 }
 
 @keyframes fadeIn {
