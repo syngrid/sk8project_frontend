@@ -80,15 +80,15 @@ const KpiCard = ({
   delta?: KpiDelta;
 }) => (
   <div
-    className={`rounded-2xl bg-white border border-slate-100 ${SHADOW} px-4 py-3.5 flex items-start gap-3`}
+    className={`rounded-2xl bg-white border border-slate-100 px-4 py-3.5 flex items-start gap-3`}
   >
     <div className={`h-9 w-9 rounded-full flex items-center justify-center ${iconBg} shrink-0`}>{icon}</div>
     <div className="flex-1 min-w-0">
-      <p className="text-[11px] font-semibold text-slate-800 leading-snug whitespace-normal break-normal">
+      <p className="text-sm font-semibold text-slate-800 leading-snug whitespace-normal break-normal">
         {title}
       </p>
       <p className="mt-0.5 text-xl font-semibold text-slate-900 tracking-tight tabular-nums">{value}</p>
-      <div className="mt-0.5">{pctText(delta)}</div>
+      {/* <div className="mt-0.5">{pctText(delta)}</div> */}
     </div>
   </div>
 );
@@ -116,7 +116,7 @@ const CardShell = ({
   right?: React.ReactNode;
   children: React.ReactNode;
 }) => (
-  <div className={`rounded-2xl bg-white border border-slate-100 ${SHADOW} overflow-hidden`}>
+  <div className={`rounded-2xl bg-white border border-slate-100  overflow-hidden`}>
     <div className="px-5 pt-4 pb-3 flex items-center justify-between gap-3">
       <p className="text-[13px] font-semibold text-slate-800">{title}</p>
       {right}
@@ -276,8 +276,8 @@ const Dashboard: React.FC = () => {
   );
 
   return (
-    <div className="dashboard-compact h-full w-full overflow-y-auto no-scrollbar animate-fade-in bg-content-bg">
-      <div className="max-w-[1400px] mx-auto p-5 lg:p-7 space-y-5">
+    <div className="h-full w-full overflow-y-auto no-scrollbar ">
+      <div className="max-w-[1400px] mx-auto space-y-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           <KpiCard
             title="Total Projects"
@@ -384,7 +384,7 @@ const Dashboard: React.FC = () => {
                   </PieChart>
                 </ResponsiveContainer>
                 <div className="-mt-[140px] flex flex-col items-center justify-center pointer-events-none">
-                  <div className="text-2xl font-semibold text-slate-900 tabular-nums">{loading ? '—' : stats.totalProjects}</div>
+                  <div className="text-xl font-semibold text-slate-900 tabular-nums">{loading ? '—' : stats.totalProjects}</div>
                   <div className="text-xs font-semibold text-slate-500">Total Projects</div>
                 </div>
               </div>
@@ -435,7 +435,7 @@ const Dashboard: React.FC = () => {
                   </PieChart>
                 </ResponsiveContainer>
                 <div className="-mt-[140px] flex flex-col items-center justify-center pointer-events-none">
-                  <div className="text-2xl font-semibold text-slate-900 tabular-nums">{loading ? '—' : totals.procTotal}</div>
+                  <div className="text-xl font-semibold text-slate-900 tabular-nums">{loading ? '—' : totals.procTotal}</div>
                   <div className="text-xs font-semibold text-slate-500">Total</div>
                 </div>
               </div>
@@ -486,7 +486,7 @@ const Dashboard: React.FC = () => {
                   </PieChart>
                 </ResponsiveContainer>
                 <div className="-mt-[140px] flex flex-col items-center justify-center pointer-events-none">
-                  <div className="text-2xl font-semibold text-slate-900 tabular-nums">{loading ? '—' : '$3.62M'}</div>
+                  <div className="text-xl font-semibold text-slate-900 tabular-nums">{loading ? '—' : '$3.62M'}</div>
                   <div className="text-xs font-semibold text-slate-500">Total Stock Value</div>
                 </div>
               </div>

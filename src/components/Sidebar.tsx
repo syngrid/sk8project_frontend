@@ -154,7 +154,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           <Link
             to="/Dashboard"
             onClick={onClose}
-            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all font-semibold text-base capitalize tracking-widest ${
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all font-semibold text-base capitalize ${
               location.pathname === '/Dashboard'
                 ? 'bg-white text-primary shadow-md'
                 : 'text-white hover:bg-white/10'
@@ -171,7 +171,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   to={section.path}
                   onClick={onClose}
                   className={`
-                    w-full flex items-center gap-4 px-3.5 py-3 rounded-lg transition-all font-semibold text-sm capitalize tracking-widest group/item
+                    w-full flex items-center gap-4 px-3.5 py-3 rounded-lg transition-all font-semibold text-sm capitalize group/item
                     ${location.pathname === section.path ? 'bg-white text-primary shadow-md' : 'text-white hover:bg-white/5'}
                   `}
                 >
@@ -183,7 +183,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   <button
                     onClick={() => toggleSection(section.id)}
                     className={`
-                        w-full flex items-center justify-between gap-4 px-3.5 py-3 rounded-lg transition-all font-semibold text-sm capitalize tracking-widest group/item
+                        w-full flex items-center justify-between gap-4 px-3.5 py-3 rounded-lg transition-all font-semibold text-sm capitalize group/item
                         ${openSection === section.id && !isCollapsed ? 'text-white' : 'text-white hover:bg-white/5'}
                       `}
                   >
@@ -196,7 +196,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     )}
 
                     {isCollapsed && (
-                      <div className="fixed left-[95px] px-3 py-2 bg-white text-primary text-xs font-semibold capitalize tracking-widest rounded-xl shadow-2xl opacity-0 translate-x-[-10px] pointer-events-none transition-all duration-200 group-hover/item:opacity-100 group-hover/item:translate-x-0 z-[110]">
+                      <div className="fixed left-[95px] px-3 py-2 bg-white text-primary text-xs font-semibold capitalize rounded-xl shadow-2xl opacity-0 translate-x-[-10px] pointer-events-none transition-all duration-200 group-hover/item:opacity-100 group-hover/item:translate-x-0 z-[110]">
                         {section.label}
                         <div className="absolute top-1/2 left-0 -ml-1 -mt-1 w-2 h-2 bg-white rotate-45"></div>
                       </div>
@@ -213,7 +213,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                         to={item.path}
                         onClick={onClose}
                     className={`
-                         flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all font-bold text-sm
+                         flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all font-semibold text-sm
                          ${location.pathname === item.path
                         ? 'bg-white text-primary shadow-md'
                         : 'text-white hover:bg-white/10'}

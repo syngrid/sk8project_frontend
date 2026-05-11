@@ -253,7 +253,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
   );
 
   return (
-    <div className="flex flex-col h-full animate-fade-in space-y-4 overflow-hidden relative p-4 md:p-6">
+    <div className="flex flex-col h-full animate-fade-in space-y-4 overflow-hidden relative">
       {/* Messages & Overlays */}
       {showSuccessOverlay && (
         <div className="fixed inset-0 z-[600] flex items-center justify-center p-4">
@@ -273,7 +273,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
           <div className="relative bg-white w-full max-w-[300px] p-8 rounded-xl shadow-2xl border border-slate-100 flex flex-col items-center text-center animate-zoom-in">
             <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-6"><Trash2 size={32} /></div>
             <h2 className="text-xs font-semibold text-black capitalize tracking-widest mb-2">Confirm Delete</h2>
-            <p className="text-xs font-bold text-slate-400 capitalize tracking-widest mb-10 leading-relaxed">This record will be permanently removed.</p>
+            <p className="text-xs font-semibold text-slate-400 capitalize tracking-widest mb-10 leading-relaxed">This record will be permanently removed.</p>
             <div className="flex flex-col w-full gap-3">
               <button onClick={handleDelete} className="w-full py-4 bg-red-500 text-white rounded-lg text-xs font-semibold uppercase tracking-widest hover:bg-red-600 transition-all shadow-xl shadow-red-500/10">Yes, Delete</button>
               <button onClick={() => setShowDeleteConfirm(false)} className="w-full py-4 bg-slate-50 text-slate-400 rounded-lg text-xs font-semibold uppercase tracking-widest hover:text-black transition-all">Cancel</button>
@@ -291,14 +291,14 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
       {/* Header */}
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-semibold text-black capitalize tracking-tight">{moduleName}</h1>
-          {/* <p className="text-xs font-bold text-slate-400 capitalize tracking-[0.2em]">{data.length} Records</p> */}
+          <h1 className="text-lg font-semibold text-black capitalize">{moduleName}</h1>
+          {/* <p className="text-xs font-semibold text-slate-400 capitalize tracking-[0.2em]">{data.length} Records</p> */}
         </div>
         <button
           onClick={() => { setEditingItem(null); setFormData({}); setShowModal(true); }}
           className="flex items-center gap-2 bg-[#E89731] text-white px-6 py-3 rounded-full hover:bg-[#d6862a] transition-all active:scale-95 shadow-xl shadow-[#E89731]/20"
         >
-          <Plus size={16} /><span className="text-xs font-semibold capitalize tracking-widest hidden sm:inline">Add {moduleName.endsWith('s') ? moduleName.slice(0, -1) : moduleName}</span>
+          <Plus size={16} /><span className="text-xs font-semibold capitalize hidden sm:inline">Add {moduleName.endsWith('s') ? moduleName.slice(0, -1) : moduleName}</span>
         </button>
       </div>
 
@@ -307,7 +307,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
         <div className="p-4 border-b border-slate-100 bg-slate-50/10">
           <div className="relative w-full max-w-sm">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600" size={14} />
-            <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full pl-11 pr-4 py-3 bg-slate-50/50 border border-slate-300 rounded-lg text-xs font-bold text-black placeholder:text-slate-600 focus:outline-none focus:border-black transition-all" />
+            <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full pl-11 pr-4 py-3 bg-slate-50/50 border border-slate-300 rounded-lg text-xs font-semibold text-black placeholder:text-slate-600 focus:outline-none focus:border-black transition-all" />
           </div>
         </div>
 
@@ -318,31 +318,25 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
               <p className="text-xs font-semibold capitalize tracking-[0.5em] text-black/10">Fetching</p>
             </div>
           ) : filteredData.length === 0 ? (
-            <div className="h-full flex flex-col items-center justify-center opacity-10 grayscale"><Plus size={40} className="mb-4" /><p className="text-xs font-semibold capitalize tracking-widest">No data found</p></div>
+            <div className="h-full flex flex-col items-center justify-center opacity-10 grayscale"><Plus size={40} className="mb-4" /><p className="text-xs font-semibold capitalize">No data found</p></div>
           ) : (
             <table className="w-full border-collapse min-w-[600px]">
               <thead className="sticky top-0 bg-slate-200 backdrop-blur-sm z-10 border-b border-slate-100">
                 <tr>
                   {(tableFields?.length ? tableFields : fields.slice(0, 5).map(f => f.name)).map(fieldName => {
                     const fieldMeta = fields.find(f => f.name === fieldName);
-                    return <th key={fieldName} className="px-6 py-4 text-left text-sm font-semibold text-slate-600 capitalize tracking-widest">{fieldMeta?.label || fieldName}</th>;
+                    return <th key={fieldName} className="px-6 py-4 text-left text-sm font-semibold text-slate-600 capitalize">{fieldMeta?.label || fieldName}</th>;
                   })}
-                  <th className="px-6 py-4 text-right text-sm font-semibold text-slate-600 capitalize tracking-widest">Options</th>
+                  <th className="px-6 py-4 text-right text-sm font-semibold text-slate-600 capitalize">Options</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredData.map((item, idx) => (
                   <tr
                     key={item._id}
-                    className={`
-    ${idx % 2 === 0 ? 'bg-white/70' : 'bg-slate-200/50'}
-    hover:bg-slate-200/60
-    transition-all
-    cursor-default
-  `}
-                  >
+                    className={` ${idx % 2 === 0 ? 'bg-white/70' : 'bg-slate-200/50'} hover:bg-slate-200/60 transition-all cursor-default `}>
                     {(tableFields?.length ? tableFields : fields.slice(0, 5).map(f => f.name)).map((fieldName, idx) => (
-                      <td key={fieldName} className={`px-6 py-3 text-sm font-semibold text-black tracking-tight ${idx === 0 ? 'cursor-pointer hover:text-primary hover:underline' : ''}`} onClick={() => idx === 0 ? setViewingItem(item) : null}>
+                      <td key={fieldName} className={`px-6 py-3 text-sm font-semibold text-black ${idx === 0 ? 'cursor-pointer hover:text-primary hover:underline' : ''}`} onClick={() => idx === 0 ? setViewingItem(item) : null}>
                         {item[fieldName] || <span className="text-slate-100 italic">none</span>}
                       </td>
                     ))}
@@ -377,7 +371,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
             <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
               <div>
                 <h2 className="text-[11px] font-semibold text-black uppercase tracking-[0.2em]">Stored Items In: {currentLocationForStock.locationName}</h2>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Real-time inventory in this bin</p>
+                <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mt-1">Real-time inventory in this bin</p>
               </div>
               <div className="flex items-center gap-3">
                 <button
@@ -395,7 +389,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
                 <div className="space-y-6 bg-slate-50 p-8 rounded-xl border border-slate-100 animate-in slide-in-from-top-4 duration-300">
                   <div className="flex items-center justify-between mb-2">
                     <p className="text-xs font-semibold text-black uppercase tracking-widest">New Stock Entry</p>
-                    <button onClick={() => setShowAddStockForm(false)} className="text-xs font-bold text-slate-400 hover:text-black uppercase underline">Cancel</button>
+                    <button onClick={() => setShowAddStockForm(false)} className="text-xs font-semibold text-slate-400 hover:text-black uppercase underline">Cancel</button>
                   </div>
                   <div className="space-y-4">
                     <div>
@@ -403,7 +397,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
                       <select
                         value={quickStockData.item}
                         onChange={(e) => setQuickStockData({ ...quickStockData, item: e.target.value })}
-                        className="w-full px-5 py-4 bg-white border border-slate-200 rounded-lg text-xs font-bold text-black focus:outline-none focus:border-black transition-all mt-1"
+                        className="w-full px-5 py-4 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-black focus:outline-none focus:border-black transition-all mt-1"
                       >
                         <option value="">Choose Item...</option>
                         {apiOptions['quickAddItems']?.map((opt: any) => (
@@ -418,7 +412,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
                         value={quickStockData.quantity || ''}
                         onChange={(e) => setQuickStockData({ ...quickStockData, quantity: Number(e.target.value) })}
                         placeholder="0.00"
-                        className="w-full px-5 py-4 bg-white border border-slate-200 rounded-lg text-xs font-bold text-black focus:outline-none focus:border-black transition-all mt-1"
+                        className="w-full px-5 py-4 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-black focus:outline-none focus:border-black transition-all mt-1"
                       />
                     </div>
                     <button
@@ -443,12 +437,12 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
                             <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm text-slate-300 group-hover:text-black transition-colors"><Package size={20} /></div>
                             <div>
                               <p className="text-xs font-semibold text-black uppercase tracking-tight">{item.itemName}</p>
-                              <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-0.5">{item.item}</p>
+                              <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mt-0.5">{item.item}</p>
                             </div>
                           </div>
                           <div className="text-right">
                             <p className="text-[12px] font-semibold text-black tracking-tight">{item.availableQty}</p>
-                            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Available</p>
+                            <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Available</p>
                           </div>
                         </div>
                       ))}
@@ -469,7 +463,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
             <div className="p-8 border-b border-slate-50 flex items-center justify-between bg-slate-50/10">
               <div>
                 <h2 className="text-[11px] font-semibold text-black uppercase tracking-[0.2em]">{editingItem ? 'Modify' : 'Create'} {moduleName.slice(0, -1)}</h2>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Fill all mandatory details</p>
+                <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mt-1">Fill all mandatory details</p>
               </div>
               <button onClick={() => setShowModal(false)} className="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-300 hover:text-black rounded-lg transition-all"><X size={20} /></button>
             </div>
@@ -483,9 +477,9 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
                         {field.required && <span className="text-xs font-semibold text-primary uppercase">Required</span>}
                       </div>
                       {field.type === 'textarea' ? (
-                        <textarea name={field.name} required={field.required} value={formData[field.name] || ''} onChange={handleInputChange} rows={3} className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold text-black focus:outline-none focus:border-black transition-all resize-none shadow-sm" />
+                        <textarea name={field.name} required={field.required} value={formData[field.name] || ''} onChange={handleInputChange} rows={3} className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 rounded-xl text-xs font-semibold text-black focus:outline-none focus:border-black transition-all resize-none shadow-sm" />
                       ) : field.type === 'select' || field.type === 'select-api' ? (
-                        <select name={field.name} required={field.required} value={formData[field.name] || ''} onChange={handleInputChange} className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold text-black focus:outline-none focus:border-black transition-all appearance-none cursor-pointer shadow-sm">
+                        <select name={field.name} required={field.required} value={formData[field.name] || ''} onChange={handleInputChange} className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 rounded-xl text-xs font-semibold text-black focus:outline-none focus:border-black transition-all appearance-none cursor-pointer shadow-sm">
                           <option value="">Select Option</option>
                           {field.type === 'select' ? field.options?.map(opt => <option key={opt} value={opt}>{opt}</option>) : apiOptions[field.name]?.filter((opt: any) => {
                             if (!field.filterBy) return true;
@@ -497,13 +491,13 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
                       ) : field.type === 'file' ? (
                         <div className="relative group/file">
                           <input type="file" name={field.name} required={field.required} onChange={handleInputChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-                          <div className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 border-dashed rounded-xl text-xs font-bold text-slate-400 group-hover/file:border-black group-hover/file:bg-slate-100/50 transition-all flex items-center gap-3">
+                          <div className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 border-dashed rounded-xl text-xs font-semibold text-slate-400 group-hover/file:border-black group-hover/file:bg-slate-100/50 transition-all flex items-center gap-3">
                             <div className="w-8 h-8 bg-white rounded-xl flex items-center justify-center shadow-sm text-slate-400 group-hover/file:text-black transition-colors"><Plus size={16} /></div>
                             <span>{formData[field.name] instanceof File ? (formData[field.name] as File).name : formData[field.name] || 'Choose File'}</span>
                           </div>
                         </div>
                       ) : (
-                        <input type={field.type} name={field.name} required={field.required} value={formData[field.name] || ''} onChange={handleInputChange} className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold text-black focus:outline-none focus:border-black transition-all shadow-sm" />
+                        <input type={field.type} name={field.name} required={field.required} value={formData[field.name] || ''} onChange={handleInputChange} className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 rounded-xl text-xs font-semibold text-black focus:outline-none focus:border-black transition-all shadow-sm" />
                       )}
                     </div>
                   ))}
@@ -535,7 +529,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
               })()}
             </div>
             <h2 className="text-sm font-semibold text-black uppercase tracking-[0.2em] mb-2">{viewingItem[fields[0].name]}</h2>
-            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-10">Document Viewer</p>
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-10">Document Viewer</p>
             {(() => {
               const fileField = fields.find(f => f.type === 'file');
               const filePath = fileField ? viewingItem[fileField.name] : null;

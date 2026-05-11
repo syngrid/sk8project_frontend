@@ -63,7 +63,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
       <div className="flex-1 flex flex-col min-w-0 relative h-full">
         <Navbar onMenuClick={() => setIsSidebarOpen(true)} />
-        <main className="flex-1 bg-white overflow-hidden lg:rounded-tl-[60px] p-4 md:p-8">
+        <main className="flex-1 bg-slate-100 overflow-hidden lg:rounded-tl-[60px] p-4 md:p-8">
           <div className="h-full">
             {children}
           </div>
