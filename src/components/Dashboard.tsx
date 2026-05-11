@@ -218,7 +218,7 @@ const Dashboard: React.FC = () => {
                 </Pie>
                 <Tooltip
                   cursor={false}
-                  formatter={(value, name) => [`${Number(value ?? 0)} tasks`, String(name ?? '')]}
+                  formatter={(value: any, name: any) => [`${Number(value ?? 0)} tasks`, String(name ?? '')]}
                   labelFormatter={() => 'Task status'}
                   contentStyle={{
                     borderRadius: 8,
@@ -232,7 +232,7 @@ const Dashboard: React.FC = () => {
                   layout="horizontal"
                   align="center"
                   iconType="circle"
-                  formatter={(value) => <span className="text-slate-600">{String(value)}</span>}
+                  formatter={(value: any) => <span className="text-slate-600">{String(value)}</span>}
                   wrapperStyle={{
                     fontSize: 12,
                     paddingTop: 8,
