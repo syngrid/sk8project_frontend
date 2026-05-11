@@ -488,7 +488,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
                             return String(opt.warehouse) === String(filterValue) || String(opt.warehouseCode) === String(filterValue) || String(opt.parent) === String(filterValue);
                           }).map((opt: any) => <option key={opt._id || getOptionLabel(opt, field.displayKey)} value={field.optionValueKey ? (opt[field.optionValueKey] || getOptionLabel(opt, field.displayKey)) : getOptionLabel(opt, field.displayKey)}>{getOptionLabel(opt, field.displayKey)}</option>)}
                         </select>
-                      ) : field.type === 'file' ? (
+                      ) : field.type === 'file' ? ( 
                         <div className="relative group/file">
                           <input type="file" name={field.name} required={field.required} onChange={handleInputChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
                           <div className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 border-dashed rounded-xl text-xs font-semibold text-slate-400 group-hover/file:border-black group-hover/file:bg-slate-100/50 transition-all flex items-center gap-3">
