@@ -253,7 +253,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
   );
 
   return (
-    <div className="flex flex-col h-full animate-fade-in space-y-4 overflow-hidden relative">
+    <div className="flex flex-col h-full animate-fade-in space-y-4 relative">
       {/* Messages & Overlays */}
       {showSuccessOverlay && (
         <div className="fixed inset-0 z-[600] flex items-center justify-center p-4">
@@ -262,7 +262,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
             <div className="w-14 h-14 bg-green-500 rounded-full flex items-center justify-center text-white mb-4 shadow-xl">
               <CheckCircle size={28} strokeWidth={3} />
             </div>
-            <p className="text-xs font-semibold text-black capitalize tracking-[0.3em]">{successMsg}</p>
+            <p className="text-xs font-semibold text-black capitalize">{successMsg}</p>
           </div>
         </div>
       )}
@@ -272,18 +272,18 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
           <div className="absolute inset-0 bg-black/5 backdrop-blur-[2px]" />
           <div className="relative bg-white w-full max-w-[300px] p-8 rounded-xl shadow-2xl border border-slate-100 flex flex-col items-center text-center animate-zoom-in">
             <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-6"><Trash2 size={32} /></div>
-            <h2 className="text-xs font-semibold text-black capitalize tracking-widest mb-2">Confirm Delete</h2>
-            <p className="text-xs font-semibold text-slate-400 capitalize tracking-widest mb-10 leading-relaxed">This record will be permanently removed.</p>
+            <h2 className="text-xs font-semibold text-black capitalize mb-2">Confirm Delete</h2>
+            <p className="text-xs font-semibold text-slate-400 capitalize mb-10 leading-relaxed">This record will be permanently removed.</p>
             <div className="flex flex-col w-full gap-3">
-              <button onClick={handleDelete} className="w-full py-4 bg-red-500 text-white rounded-lg text-xs font-semibold uppercase tracking-widest hover:bg-red-600 transition-all shadow-xl shadow-red-500/10">Yes, Delete</button>
-              <button onClick={() => setShowDeleteConfirm(false)} className="w-full py-4 bg-slate-50 text-slate-400 rounded-lg text-xs font-semibold uppercase tracking-widest hover:text-black transition-all">Cancel</button>
+              <button onClick={handleDelete} className="w-full py-4 bg-red-500 text-white rounded-lg text-xs font-semibold uppercase hover:bg-red-600 transition-all shadow-xl shadow-red-500/10">Yes, Delete</button>
+              <button onClick={() => setShowDeleteConfirm(false)} className="w-full py-4 bg-slate-50 text-slate-400 rounded-lg text-xs font-semibold uppercase hover:text-black transition-all">Cancel</button>
             </div>
           </div>
         </div>
       )}
 
       {message && (
-        <div className={`fixed top-4 right-4 z-[520] px-4 py-3 rounded-lg text-xs font-semibold capitalize tracking-widest shadow-2xl ${message.type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
+        <div className={`fixed top-4 right-4 z-[520] px-4 py-3 rounded-lg text-xs font-semibold capitalize shadow-2xl ${message.type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
           {message.text}
         </div>
       )}
@@ -315,7 +315,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
           {loading ? (
             <div className="h-full flex flex-col items-center justify-center gap-4">
               <Loader2 className="animate-spin text-black/10" size={32} />
-              <p className="text-xs font-semibold capitalize tracking-[0.5em] text-black/10">Fetching</p>
+              <p className="text-xs font-semibold capitalize text-black/10">Fetching</p>
             </div>
           ) : filteredData.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center opacity-10 grayscale"><Plus size={40} className="mb-4" /><p className="text-xs font-semibold capitalize">No data found</p></div>
@@ -370,13 +370,13 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
           <div className="relative bg-white w-full max-w-xl rounded-xl shadow-2xl border border-slate-100 overflow-hidden animate-zoom-in flex flex-col max-h-[85vh]">
             <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
               <div>
-                <h2 className="text-[11px] font-semibold text-black uppercase tracking-[0.2em]">Stored Items In: {currentLocationForStock.locationName}</h2>
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mt-1">Real-time inventory in this bin</p>
+                <h2 className="text-[11px] font-semibold text-black uppercase">Stored Items In: {currentLocationForStock.locationName}</h2>
+                <p className="text-xs font-semibold text-slate-400 uppercase mt-1">Real-time inventory in this bin</p>
               </div>
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setShowAddStockForm(true)}
-                  className="bg-[#E89731] text-white px-5 py-3 rounded-lg text-xs font-semibold capitalize tracking-widest hover:scale-105 transition-all shadow-xl shadow-[#E89731]/20"
+                  className="bg-[#E89731] text-white px-5 py-3 rounded-lg text-xs font-semibold capitalize hover:scale-105 transition-all shadow-xl shadow-[#E89731]/20"
                 >
                   Add Item
                 </button>
@@ -388,12 +388,12 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
               {showAddStockForm ? (
                 <div className="space-y-6 bg-slate-50 p-8 rounded-xl border border-slate-100 animate-in slide-in-from-top-4 duration-300">
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-xs font-semibold text-black uppercase tracking-widest">New Stock Entry</p>
+                    <p className="text-xs font-semibold text-black uppercase ">New Stock Entry</p>
                     <button onClick={() => setShowAddStockForm(false)} className="text-xs font-semibold text-slate-400 hover:text-black uppercase underline">Cancel</button>
                   </div>
                   <div className="space-y-4">
                     <div>
-                      <label className="text-xs font-semibold text-slate-400 uppercase tracking-[0.2em] ml-1">Select Item</label>
+                      <label className="text-xs font-semibold text-slate-400 uppercase">Select Item</label>
                       <select
                         value={quickStockData.item}
                         onChange={(e) => setQuickStockData({ ...quickStockData, item: e.target.value })}
@@ -406,7 +406,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
                       </select>
                     </div>
                     <div>
-                      <label className="text-xs font-semibold text-slate-400 uppercase tracking-[0.2em] ml-1">Quantity to Add</label>
+                      <label className="text-xs font-semibold text-slate-400 uppercase ml-1">Quantity to Add</label>
                       <input
                         type="number"
                         value={quickStockData.quantity || ''}
@@ -417,7 +417,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
                     </div>
                     <button
                       onClick={handleQuickAddStock}
-                      className="w-full py-5 bg-blue-600 text-white rounded-lg text-xs font-semibold uppercase tracking-[0.2em] hover:bg-blue-700 transition-all flex items-center justify-center gap-3 shadow-xl shadow-blue-600/10 mt-2"
+                      className="w-full py-5 bg-blue-600 text-white rounded-lg text-xs font-semibold uppercase hover:bg-blue-700 transition-all flex items-center justify-center gap-3 shadow-xl shadow-blue-600/10 mt-2"
                     >
                       Submit Stock <ArrowRight size={14} />
                     </button>
@@ -428,7 +428,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
                   {isStockLoading ? (
                     <div className="flex flex-col items-center py-10 gap-3"><Loader2 className="animate-spin text-slate-200" size={32} /></div>
                   ) : stockItems.length === 0 ? (
-                    <div className="flex flex-col items-center py-10 opacity-30 gap-3"><Package size={40} /><p className="text-xs font-semibold uppercase tracking-widest">This location is empty</p></div>
+                    <div className="flex flex-col items-center py-10 opacity-30 gap-3"><Package size={40} /><p className="text-xs font-semibold uppercase ">This location is empty</p></div>
                   ) : (
                     <div className="space-y-3">
                       {stockItems.map((item, idx) => (
@@ -436,13 +436,13 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
                           <div className="flex items-center gap-4">
                             <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm text-slate-300 group-hover:text-black transition-colors"><Package size={20} /></div>
                             <div>
-                              <p className="text-xs font-semibold text-black uppercase tracking-tight">{item.itemName}</p>
-                              <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mt-0.5">{item.item}</p>
+                              <p className="text-xs font-semibold text-black uppercase">{item.itemName}</p>
+                              <p className="text-xs font-semibold text-slate-400 uppercase mt-0.5">{item.item}</p>
                             </div>
                           </div>
                           <div className="text-right">
-                            <p className="text-[12px] font-semibold text-black tracking-tight">{item.availableQty}</p>
-                            <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Available</p>
+                            <p className="text-[12px] font-semibold text-black">{item.availableQty}</p>
+                            <p className="text-xs font-semibold text-slate-400 uppercase">Available</p>
                           </div>
                         </div>
                       ))}
@@ -462,8 +462,8 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
           <div className="relative bg-white w-full max-w-2xl rounded-xl shadow-2xl border border-slate-50 overflow-hidden animate-zoom-in max-h-[90vh] flex flex-col">
             <div className="p-8 border-b border-slate-50 flex items-center justify-between bg-slate-50/10">
               <div>
-                <h2 className="text-[11px] font-semibold text-black uppercase tracking-[0.2em]">{editingItem ? 'Modify' : 'Create'} {moduleName.slice(0, -1)}</h2>
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mt-1">Fill all mandatory details</p>
+                <h2 className="text-[11px] font-semibold text-black uppercase">{editingItem ? 'Modify' : 'Create'} {moduleName.slice(0, -1)}</h2>
+                <p className="text-xs font-semibold text-slate-400 uppercase mt-1">Fill all mandatory details</p>
               </div>
               <button onClick={() => setShowModal(false)} className="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-300 hover:text-black rounded-lg transition-all"><X size={20} /></button>
             </div>
@@ -473,7 +473,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
                   {fields.map((field) => (
                     <div key={field.name} className={`space-y-2 ${field.type === 'textarea' ? 'md:col-span-2' : ''}`}>
                       <div className="flex items-center justify-between px-1">
-                        <label className="text-xs font-semibold text-slate-400 uppercase tracking-widest">{field.label}</label>
+                        <label className="text-xs font-semibold text-slate-400 uppercase">{field.label}</label>
                         {field.required && <span className="text-xs font-semibold text-primary uppercase">Required</span>}
                       </div>
                       {field.type === 'textarea' ? (
@@ -503,7 +503,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
                   ))}
                 </div>
               </div>
-              <div className="p-8 bg-slate-50/20 border-t border-slate-50"><button type="submit" disabled={loading} className="w-full py-5 bg-[#E89731] text-white rounded-xl text-xs font-semibold capitalize tracking-[0.3em] hover:bg-[#d6862a] transition-all flex items-center justify-center gap-3 shadow-2xl disabled:opacity-50">{loading ? <Loader2 className="animate-spin" size={16} /> : `Save ${moduleName.endsWith('s') ? moduleName.slice(0, -1) : moduleName}`}</button></div>
+              <div className="p-8 bg-slate-50/20 border-t border-slate-50"><button type="submit" disabled={loading} className="w-full py-3 bg-[#E89731] text-white rounded-xl text-sm font-semibold capitalize hover:bg-[#d6862a] transition-all flex items-center justify-center gap-3 shadow-2xl disabled:opacity-50">{loading ? <Loader2 className="animate-spin" size={16} /> : `Save ${moduleName.endsWith('s') ? moduleName.slice(0, -1) : moduleName}`}</button></div>
             </form>
           </div>
         </div>
@@ -520,21 +520,21 @@ const MasterPage: React.FC<MasterPageProps> = ({ moduleName, endpoint, fields, s
                 const fileField = fields.find(f => f.type === 'file');
                 const filePath = fileField ? viewingItem[fileField.name] : null;
                 const fileUrl = filePath ? `http://localhost:5000${filePath}` : null;
-                if (!fileUrl) return <div className="flex flex-col items-center opacity-40"><FileText size={48} className="mb-3" /><p className="text-xs font-semibold uppercase tracking-widest text-center">No Document Attached</p></div>;
+                if (!fileUrl) return <div className="flex flex-col items-center opacity-40"><FileText size={48} className="mb-3" /><p className="text-xs font-semibold uppercase text-center">No Document Attached</p></div>;
                 const isPdf = filePath?.toLowerCase().endsWith('.pdf');
                 const isImage = /\.(jpg|jpeg|png|gif|webp)$/i.test(filePath || '');
-                if (isPdf) return <object data={fileUrl} type="application/pdf" className="w-full h-full rounded-xl"><div className="flex flex-col items-center p-8 text-center"><FileText size={48} className="text-primary mb-3" /><p className="text-xs font-semibold uppercase tracking-widest mb-4">PDF Preview not available</p><a href={fileUrl} target="_blank" rel="noreferrer" className="px-6 py-3 bg-black text-white rounded-full text-xs font-semibold uppercase tracking-widest">Open PDF</a></div></object>;
+                if (isPdf) return <object data={fileUrl} type="application/pdf" className="w-full h-full rounded-xl"><div className="flex flex-col items-center p-8 text-center"><FileText size={48} className="text-primary mb-3" /><p className="text-xs font-semibold uppercase mb-4">PDF Preview not available</p><a href={fileUrl} target="_blank" rel="noreferrer" className="px-6 py-3 bg-black text-white rounded-full text-xs font-semibold uppercase">Open PDF</a></div></object>;
                 if (isImage) return <img src={fileUrl} className="w-full h-full object-contain" alt="Preview" />;
-                return <div className="flex flex-col items-center p-8 text-center"><FileText size={48} className="text-primary mb-3" /><p className="text-xs font-semibold uppercase tracking-widest mb-2">{filePath?.split('/').pop()}</p><a href={fileUrl} target="_blank" rel="noreferrer" className="text-xs font-semibold text-primary underline uppercase tracking-widest">Download to View</a></div>;
+                return <div className="flex flex-col items-center p-8 text-center"><FileText size={48} className="text-primary mb-3" /><p className="text-xs font-semibold uppercase mb-2">{filePath?.split('/').pop()}</p><a href={fileUrl} target="_blank" rel="noreferrer" className="text-xs font-semibold text-primary underline uppercase">Download to View</a></div>;
               })()}
             </div>
-            <h2 className="text-sm font-semibold text-black uppercase tracking-[0.2em] mb-2">{viewingItem[fields[0].name]}</h2>
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-10">Document Viewer</p>
+            <h2 className="text-sm font-semibold text-black uppercase mb-2">{viewingItem[fields[0].name]}</h2>
+            <p className="text-xs font-semibold text-slate-400 uppercase mb-10">Document Viewer</p>
             {(() => {
               const fileField = fields.find(f => f.type === 'file');
               const filePath = fileField ? viewingItem[fileField.name] : null;
               const fileUrl = filePath ? `http://localhost:5000${filePath}` : null;
-              if (fileUrl) return <a href={fileUrl} target="_blank" rel="noreferrer" className="w-full py-5 bg-black text-white rounded-xl text-xs font-semibold uppercase tracking-[0.3em] hover:bg-slate-800 transition-all flex items-center justify-center gap-3 shadow-2xl">Open in New Tab</a>;
+              if (fileUrl) return <a href={fileUrl} target="_blank" rel="noreferrer" className="w-full py-5 bg-black text-white rounded-xl text-xs font-semibold uppercase hover:bg-slate-800 transition-all flex items-center justify-center gap-3 shadow-2xl">Open in New Tab</a>;
               return null;
             })()}
           </div>
